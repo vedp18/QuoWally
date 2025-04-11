@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_quote_wallpaper_app/blocs/author_bloc/author_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/blocs/wallpaper_bloc/wallpaper_bloc.dart';
+import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
 import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
 import 'package:flutter_quote_wallpaper_app/models/wallpaper.dart';
 import 'package:flutter_quote_wallpaper_app/ui/widgets/set_wallpaper.dart';
@@ -47,7 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
       final state = bloc.state;
       if (state is QuoteUpdated) return state.updatedQuote;
       if (state is QuoteInitial) return state.quote;
-      return Quote(quote: "Error fetching quote", quoteStyle: QuoteStyle());
+      return Quote(
+        quote: "Error fetching quote",
+        quoteStyle: QuoteStyle(),
+        authorStyle: AuthorStyle(),
+      );
+    });
+
+    final currentAuthorStyle = context.select<AuthorBloc, AuthorStyle>((bloc) {
+      final state = bloc.state;
+      return state.updatedAuthorStyle;
     });
 
     final currentWallpaper = context.select<WallpaperBloc, Wallpaper>((bloc) {
@@ -115,8 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 spacing: 3,
                 children: [
-
-                  
                   Text(
                     currentQuote.quote,
                     style: GoogleFonts.getFont(
@@ -144,11 +153,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     alignment: Alignment.bottomRight,
                     child: Text(
                       "-  ${currentQuote.author}",
-                      style: GoogleFonts.tangerine(
+                      style: GoogleFonts.getFont(
+                        currentAuthorStyle.authorFont,
                         textStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.brown[900]),
+                          fontSize: currentAuthorStyle.authorSize,
+                          fontStyle: currentAuthorStyle.authorFontStyle,
+                          fontWeight: currentAuthorStyle.authorWeight,
+                          color: currentQuote.quoteStyle.quoteColor,
+                        ),
                       ),
                     ),
                   ),
@@ -207,6 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: QuoteListTile(
                   currentQuoteStyle: currentQuote.quoteStyle,
                   wallpaperColor: currentWallpaper.background,
+                  currentAuthorStyle: currentAuthorStyle,
                 ),
               ),
             )
@@ -222,7 +235,6 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icons.screen_lock_portrait_sharp,
               size: 27,
               onPressed: () {
-                
                 currentWallpaper.quote = currentQuote;
 
                 SetWallPaper.setWallpaper(

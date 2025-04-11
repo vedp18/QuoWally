@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
 import 'package:flutter_quote_wallpaper_app/models/quote.dart';
 import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
 

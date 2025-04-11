@@ -8,7 +8,7 @@ class QuoteStyle {
   final FontWeight quoteWeight;
   final TextAlign quoteAlignment;
   final Color quoteColor;
-  final Color wallpaperColor;
+  // final Color wallpaperColor;
 
 
   QuoteStyle({
@@ -18,7 +18,7 @@ class QuoteStyle {
     this.quoteWeight = FontWeight.w600,
     this.quoteAlignment= TextAlign.center,
     this.quoteColor = const Color.fromRGBO(78, 52, 46, 1),
-    this.wallpaperColor = const Color.fromARGB(255, 29, 19, 17)
+    // this.wallpaperColor = const Color.fromARGB(255, 29, 19, 17)
 
   });
 
@@ -39,7 +39,7 @@ class QuoteStyle {
       quoteWeight: quoteWeight ?? this.quoteWeight,
       quoteAlignment: quoteAlignment ?? this.quoteAlignment,
       quoteColor: quoteColor ?? this.quoteColor,
-      wallpaperColor: wallpaperColor ?? this.wallpaperColor,
+      // wallpaperColor: wallpaperColor ?? this.wallpaperColor,
     );
   }
 
