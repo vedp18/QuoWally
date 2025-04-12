@@ -40,8 +40,9 @@ final class AuthorWeightChangedEvent extends AuthorEvent {
   AuthorWeightChangedEvent({required this.newWeight});
 }
 
-final class AuthorPositionChangedEvent extends AuthorEvent {
-  final TextAlign newPosition;
+final class AuthorAlignmentChangedEvent extends AuthorEvent {
+  final Alignment newAlignment;
 
-  AuthorPositionChangedEvent({required this.newPosition});
+  AuthorAlignmentChangedEvent({required this.newAlignment});
+
 }

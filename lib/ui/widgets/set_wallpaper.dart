@@ -36,8 +36,8 @@ class SetWallPaper {
 
     canvas.drawRect(Rect.fromLTWH(0, 0, wd, ht), paint);
 
-    // Draw Text
-    final textPainter = TextPainter(
+    // quote painter
+    final quotePainter = TextPainter(
       text: TextSpan(
         text: quote.quote,
         style: GoogleFonts.getFont(
@@ -55,40 +55,61 @@ class SetWallPaper {
       textDirection: TextDirection.ltr,
     );
 
-    // final textPainter2 = TextPainter(
-    //   text: TextSpan(
-    //     text: "-------",
-    //     style: GoogleFonts.cormorantInfant(
-    //       textStyle: TextStyle(
-    //         color: Colors.white,
-    //         fontSize: 50,
-    //       ),
-    //     ),
-    //   ),
-    //   textAlign: TextAlign.start,
-    //   textDirection: TextDirection.ltr,
-    // );
-    // textPainter.layout();
-    textPainter.layout(minWidth: 0, maxWidth: (wd - 240));
-    // textPainter2.layout(minWidth: 0, maxWidth: 120);
-
-    // textPainter2.paint(canvas, Offset(0, ht * 0.266));
-    // print(textPainter.width);
+    quotePainter.layout(minWidth: 0, maxWidth: (wd - 240));
 
     double dx;
     if (textAlign == TextAlign.center) {
-      dx = (wd - textPainter.width) / 2;
+      dx = (wd - quotePainter.width) / 2;
     } else if (textAlign == TextAlign.right) {
-      dx = wd - textPainter.width - 40; // small padding from right
+      dx = wd - quotePainter.width - 120; // small padding from right
     } else {
-      dx = 40; // left alignment padding
+      dx = 120; // left alignment padding
     }
 
     final double dy = ht * 0.266;
-    textPainter.paint(canvas, Offset(dx, dy));
+    quotePainter.paint(canvas, Offset(dx, dy));
 
-    // textPainter2.paint(canvas, Offset(wd - 120, ht * 0.266));
 
+
+    final authorAlignment = Alignment.bottomRight;
+    // final authorAlignment = quote.authorStyle.quoteAlignment;
+    // auther painter
+    final authorPainter = TextPainter(
+      text: TextSpan(
+        text: "- ${quote.author}",
+        style: GoogleFonts.getFont(
+          quote.authorStyle!.authorFont,
+          textStyle: TextStyle(
+            height: 1.2,
+            color: quote.quoteStyle.quoteColor,
+            fontSize: quote.authorStyle!.authorSize * 3,
+            fontStyle: quote.authorStyle!.authorFontStyle,
+            fontWeight: quote.authorStyle!.authorWeight,
+          ),
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    );
+
+    authorPainter.layout(minWidth: 0, maxWidth: wd - 120); // keep side padding
+
+    // Convert Alignment to dx offset
+    double authorDx;
+    if (authorAlignment == Alignment.center || authorAlignment.x == 0) {
+      authorDx = (wd - authorPainter.width) / 2;
+    } else if (authorAlignment.x > 0) {
+      authorDx = wd - authorPainter.width - 120;
+    } else {
+      authorDx = 120;
+    }
+
+    final double authorDy = dy + quotePainter.height + 30; // below quote
+    authorPainter.paint(canvas, Offset(authorDx, authorDy));
+
+
+
+
+    // final painting on wallpaper
     final picture = recorder.endRecording();
     final img = await picture.toImage(wd.toInt(), ht.toInt());
     final byteData = await img.toByteData(format: ui.ImageByteFormat.png);

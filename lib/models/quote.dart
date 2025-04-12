@@ -7,13 +7,13 @@ class Quote {
   final String quote;
   final String author;
   final QuoteStyle quoteStyle;
-  final AuthorStyle authorStyle;
+  AuthorStyle? authorStyle;
 
-  const Quote({
+  Quote({
     required this.quote,
     this.author = "Shri Krishna Vasudeva Yadav",
     required this.quoteStyle,
-    required this.authorStyle,
+    this.authorStyle,
   });
 
  

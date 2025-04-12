@@ -24,7 +24,7 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
     Emitter<QuoteState> emit,
   ) {
     final Quote currentQuote = _getCurrentQuote(state);
-    final updatedQuote = currentQuote.copyWith(quote: event.newQuoteText);
+    final updatedQuote = currentQuote.copyWith(quote: event.newQuoteText, author: event.newAuthorText);
     emit(QuoteUpdated(updatedQuote: updatedQuote));
   }
 

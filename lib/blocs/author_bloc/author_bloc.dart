@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote.dart';
 
 part 'author_event.dart';
 part 'author_state.dart';
@@ -14,7 +13,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
     on<AuthorFontStyleChangedEvent>(_onAuthorFontStyleChangedEvent);
     on<AuthorSizeChangedEvent>(_onAuthorSizeChangedEvent);
     on<AuthorWeightChangedEvent>(_onAuthorWeightChangedEvent);
-    on<AuthorPositionChangedEvent>(_onAuthorPositionChangedEvent);
+    on<AuthorAlignmentChangedEvent>(_onAuthorAlignmentChangedEvent);
   }
 
   // // changing author
@@ -92,14 +91,14 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
   }
 
   // changing quote alignment
-  void _onAuthorPositionChangedEvent(
-    AuthorPositionChangedEvent event,
+  void _onAuthorAlignmentChangedEvent(
+    AuthorAlignmentChangedEvent event,
     Emitter<AuthorState> emit,
   ) {
     final AuthorStyle currentAuthorStyle = _getCurrentAuthorStyle(state);
 
     final updatedAuthorStyle =
-        currentAuthorStyle.copyWith(authorPosition: event.newPosition);
+        currentAuthorStyle.copyWith(authorAlignment: event.newAlignment);
 
     emit(AuthorState(updatedAuthorStyle: updatedAuthorStyle));
   }

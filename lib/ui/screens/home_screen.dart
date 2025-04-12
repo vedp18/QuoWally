@@ -9,7 +9,7 @@ import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
 import 'package:flutter_quote_wallpaper_app/models/wallpaper.dart';
 import 'package:flutter_quote_wallpaper_app/ui/widgets/set_wallpaper.dart';
 import 'package:flutter_quote_wallpaper_app/models/quote.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/qoute_list_tile.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/qoute_styling_list_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -76,10 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 100,
               child: DrawerHeader(
                 child: Text(
-                  'Quote Wallpaper',
-                  style: GoogleFonts.lato(
-                    color: Colors.brown[500],
+                  'QuoWally',
+                  style: GoogleFonts.charm(
+                    color: Colors.brown[800],
                     fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -106,9 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: _backgroundColor,
         scrolledUnderElevation: 0,
-        title: const Text("Quote Wallpaper"),
+        title: const Text("QuoWally"),
         foregroundColor: Colors.brown[800],
         centerTitle: true,
+        titleTextStyle: GoogleFonts.charm(
+            textStyle: TextStyle(
+                color: Colors.brown[800],
+                fontSize: 24,
+                fontWeight: FontWeight.bold)),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -117,7 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             // Quote Preview
             Container(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 10),
+              width: physicalWd,
+              padding: const EdgeInsets.only(
+                  left: 16.0, right: 16.0, top: 10, bottom: 10),
               decoration: BoxDecoration(
                 color: currentWallpaper.background,
                 // color: Colors.brown[50],
@@ -150,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   //       color: Colors.brown[800]),
                   // ),
                   Align(
-                    alignment: Alignment.bottomRight,
+                    alignment: currentAuthorStyle.authorAlignment,
                     child: Text(
                       "-  ${currentQuote.author}",
                       style: GoogleFonts.getFont(
@@ -216,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 6.0),
-                child: QuoteListTile(
+                child: QuoteStylingListTile(
                   currentQuoteStyle: currentQuote.quoteStyle,
                   wallpaperColor: currentWallpaper.background,
                   currentAuthorStyle: currentAuthorStyle,
@@ -235,6 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icons.screen_lock_portrait_sharp,
               size: 27,
               onPressed: () {
+                currentQuote.authorStyle = currentAuthorStyle;
                 currentWallpaper.quote = currentQuote;
 
                 SetWallPaper.setWallpaper(
@@ -251,6 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icons.home_outlined,
               size: 30,
               onPressed: () {
+                currentQuote.authorStyle = currentAuthorStyle;
                 currentWallpaper.quote = currentQuote;
                 SetWallPaper.setWallpaper(
                   wd: physicalWd,
@@ -267,6 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: null,
               size: 19,
               onPressed: () {
+                currentQuote.authorStyle = currentAuthorStyle;
                 currentWallpaper.quote = currentQuote;
                 SetWallPaper.setWallpaper(
                   wd: physicalWd,

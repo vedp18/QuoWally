@@ -5,6 +5,7 @@ import 'package:flutter_quote_wallpaper_app/blocs/author_bloc/author_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/blocs/wallpaper_bloc/wallpaper_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
+import 'package:flutter_quote_wallpaper_app/ui/screens/quotes_list_screen.dart';
 import 'package:flutter_quote_wallpaper_app/utils/alignments_list.dart';
 import 'package:flutter_quote_wallpaper_app/utils/colors_list.dart';
 import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
@@ -14,12 +15,12 @@ import 'package:flutter_quote_wallpaper_app/utils/fonts_list.dart';
 import 'package:flutter_quote_wallpaper_app/utils/size_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class QuoteListTile extends StatefulWidget {
+class QuoteStylingListTile extends StatefulWidget {
   final QuoteStyle currentQuoteStyle;
   final Color wallpaperColor;
   final AuthorStyle currentAuthorStyle;
 
-  const QuoteListTile({
+  const QuoteStylingListTile({
     super.key,
     required this.currentQuoteStyle,
     required this.wallpaperColor,
@@ -27,23 +28,31 @@ class QuoteListTile extends StatefulWidget {
   });
 
   @override
-  State<QuoteListTile> createState() => _QuoteListTileState();
+  State<QuoteStylingListTile> createState() => _QuoteStylingListTileState();
 }
 
-class _QuoteListTileState extends State<QuoteListTile> {
+class _QuoteStylingListTileState extends State<QuoteStylingListTile> {
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
         _buildSelectTextColorTile(widget.currentQuoteStyle),
+        Divider(height: 0, color: Colors.brown[100]),
         _buildSelectBackgroundColorTile(widget.wallpaperColor),
+        Divider(height: 0, color: Colors.brown[100]),
         _buildTextSizeTile(widget.currentQuoteStyle, widget.currentAuthorStyle),
+        Divider(height: 0, color: Colors.brown[100]),
         _buildTextFontTile(widget.currentQuoteStyle, widget.currentAuthorStyle),
+        Divider(height: 0, color: Colors.brown[100]),
         _buildTextWeightTile(
             widget.currentQuoteStyle, widget.currentAuthorStyle),
+        Divider(height: 0, color: Colors.brown[100]),
         _buildTextFontStyleTile(
             widget.currentQuoteStyle, widget.currentAuthorStyle),
-        _buildTextAlignmentTile(widget.currentQuoteStyle),
+        Divider(height: 0, color: Colors.brown[100]),
+        _buildTextAlignmentTile(
+            widget.currentQuoteStyle, widget.currentAuthorStyle),
+        Divider(height: 0, color: Colors.brown[100]),
         _buildSelectQuoteTile(widget.currentQuoteStyle),
       ],
     );
@@ -136,7 +145,7 @@ class _QuoteListTileState extends State<QuoteListTile> {
 
   Widget _buildSelectBackgroundColorTile(Color wallpaperColor) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -221,7 +230,7 @@ class _QuoteListTileState extends State<QuoteListTile> {
   Widget _buildTextSizeTile(
       QuoteStyle currentQuoteStyle, AuthorStyle currentAuthorStyle) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -343,7 +352,7 @@ class _QuoteListTileState extends State<QuoteListTile> {
   Widget _buildTextFontTile(
       QuoteStyle currentQuoteStyle, AuthorStyle currentAuthorStyle) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -469,7 +478,7 @@ class _QuoteListTileState extends State<QuoteListTile> {
   Widget _buildTextFontStyleTile(
       QuoteStyle currentQuoteStyle, AuthorStyle currentAuthorStyle) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -587,7 +596,7 @@ class _QuoteListTileState extends State<QuoteListTile> {
   Widget _buildTextWeightTile(
       QuoteStyle currentQuoteStyle, AuthorStyle currentAuthorStyle) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -704,15 +713,16 @@ class _QuoteListTileState extends State<QuoteListTile> {
     );
   }
 
-  Widget _buildTextAlignmentTile(QuoteStyle currentQuoteStyle) {
+  Widget _buildTextAlignmentTile(
+      QuoteStyle currentQuoteStyle, AuthorStyle currentAuthorStyle) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           RichText(
             text: TextSpan(
-              text: 'Text Alignment: ',
+              text: 'Text Align: ',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.brown[500],
@@ -734,10 +744,10 @@ class _QuoteListTileState extends State<QuoteListTile> {
             height: 25,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              spacing: 14,
+              // spacing: 14,
               children: [
                 Text(
-                  'Text Alignment:',
+                  'Quote Text Align:',
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.brown[700],
@@ -745,7 +755,7 @@ class _QuoteListTileState extends State<QuoteListTile> {
                 ),
                 DropdownButton2<TextAlign>(
                   buttonStyleData: ButtonStyleData(
-                    width: 185,
+                    width: 171,
                   ),
                   dropdownStyleData: DropdownStyleData(
                     width: 150,
@@ -760,11 +770,56 @@ class _QuoteListTileState extends State<QuoteListTile> {
                         .add(QuoteAlignmentChangedEvent(newAlignment: value!));
                   },
                   underline: const SizedBox(),
-                  items: AlignmentsList.alignments.keys.map((TextAlign value) {
+                  items: AlignmentsList.quoteAlignments.keys
+                      .map((TextAlign value) {
                     return DropdownMenuItem<TextAlign>(
                       value: value,
                       child: Text(
-                        AlignmentsList.alignments[value]!,
+                        AlignmentsList.quoteAlignments[value]!,
+                        style: TextStyle(fontSize: 12, color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 25,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // spacing: 14,
+              children: [
+                Text(
+                  'Author Text Align:',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.brown[700],
+                  ),
+                ),
+                DropdownButton2<Alignment>(
+                  buttonStyleData: ButtonStyleData(
+                    width: 171,
+                  ),
+                  dropdownStyleData: DropdownStyleData(
+                    width: 150,
+                    maxHeight: 300,
+                  ),
+                  isExpanded: true,
+                  // menuWidth: 200,
+                  value: currentAuthorStyle.authorAlignment,
+                  onChanged: (value) {
+                    context
+                        .read<AuthorBloc>()
+                        .add(AuthorAlignmentChangedEvent(newAlignment: value!));
+                  },
+                  underline: const SizedBox(),
+                  items: AlignmentsList.authorAlignments.keys
+                      .map((Alignment value) {
+                    return DropdownMenuItem<Alignment>(
+                      value: value,
+                      child: Text(
+                        AlignmentsList.authorAlignments[value]!,
                         style: TextStyle(fontSize: 12, color: Colors.black),
                       ),
                     );
@@ -780,7 +835,7 @@ class _QuoteListTileState extends State<QuoteListTile> {
 
   Widget _buildSelectQuoteTile(QuoteStyle currentQuoteStyle) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -794,8 +849,7 @@ class _QuoteListTileState extends State<QuoteListTile> {
               ),
               children: [
                 TextSpan(
-                  text:
-                      'Sets the text color of the quote and author name. For instance, if you have a dark wallpaper then set the text color to white.',
+                  text: 'Select quote from any List.',
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Colors.brown[300],
@@ -804,41 +858,57 @@ class _QuoteListTileState extends State<QuoteListTile> {
               ],
             ),
           ),
-          SizedBox(
-            height: 25,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              spacing: 14,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3.0),
+            child: Wrap(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 10,
               children: [
-                Text(
-                  'Select Quote:',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.brown[700],
-                  ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      padding: EdgeInsets.symmetric(horizontal: 7),
+                      // fixedSize: Size(100, 10),
+                      minimumSize: Size(0, 30),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      side: BorderSide(color: Colors.brown[50]!)),
+                  onPressed: () {},
+                  child: Text("Select Random Quote"),
                 ),
-                DropdownButton2<String>(
-                  buttonStyleData: ButtonStyleData(
-                    width: 185,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    width: 150,
-                    maxHeight: 300,
-                  ),
-                  isExpanded: true,
-                  value: 'white',
-                  onChanged: (value) {},
-                  underline: const SizedBox(),
-                  items:
-                      ['white', 'black', 'brown', 'blue'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: TextStyle(fontSize: 12, color: Colors.black),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      padding: EdgeInsets.symmetric(horizontal: 7),
+                      // fixedSize: Size(100, 10),
+                      minimumSize: Size(0, 30),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      side: BorderSide(color: Colors.brown[50]!)),
+                  onPressed: () {},
+                  child: Text("Favourite Quotes"),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      padding: EdgeInsets.symmetric(horizontal: 7),
+                      // fixedSize: Size(100, 10),
+                      minimumSize: Size(100, 30),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      side: BorderSide(color: Colors.brown[50]!)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuotesListScreen(),
                       ),
                     );
-                  }).toList(),
+                  },
+                  child: Text("QuoWally Quotes"),
                 ),
               ],
             ),

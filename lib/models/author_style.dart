@@ -6,7 +6,7 @@ class AuthorStyle {
   final String authorFont;
   final FontStyle authorFontStyle;
   final FontWeight authorWeight;
-  final TextAlign authorPosition;
+  final Alignment authorAlignment;
   // final Color quoteColor;
 
   AuthorStyle({
@@ -14,7 +14,7 @@ class AuthorStyle {
     this.authorFont = 'Italianno',
     this.authorFontStyle = FontStyle.normal,
     this.authorWeight = FontWeight.w600,
-    this.authorPosition = TextAlign.center,
+    this.authorAlignment = Alignment.bottomRight,
     // this.quoteColor = const Color.fromRGBO(78, 52, 46, 1),
   });
 
@@ -23,7 +23,7 @@ class AuthorStyle {
     String? authorFont,
     FontStyle? authorFontStyle,
     FontWeight? authorWeight,
-    TextAlign? authorPosition,
+    Alignment? authorAlignment
     // Color? quoteColor,
   }) {
     return AuthorStyle(
@@ -31,7 +31,7 @@ class AuthorStyle {
       authorFont: authorFont ?? this.authorFont,
       authorFontStyle: authorFontStyle ?? this.authorFontStyle,
       authorWeight: authorWeight ?? this.authorWeight,
-      authorPosition: authorPosition ?? this.authorPosition,
+      authorAlignment: authorAlignment ?? this.authorAlignment,
       // quoteColor: quoteColor ?? this.quoteColor,
     );
   }

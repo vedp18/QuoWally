@@ -16,7 +16,7 @@ class QuoteStyle {
     this.quoteFont = "Tiro Devanagari Sanskrit",
     this.quoteFontStyle = FontStyle.normal,
     this.quoteWeight = FontWeight.w600,
-    this.quoteAlignment= TextAlign.center,
+    this.quoteAlignment= TextAlign.left,
     this.quoteColor = const Color.fromRGBO(78, 52, 46, 1),
     // this.wallpaperColor = const Color.fromARGB(255, 29, 19, 17)
 
