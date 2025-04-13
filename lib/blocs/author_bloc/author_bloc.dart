@@ -21,7 +21,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
   //   AuthorChangedEvent event,
   //   Emitter<AuthorState> emit,
   // ) {
-  //   final AuthorStyle currentAuthorStyle = _getCurrentAuthorStyle(state);
+  //   final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
   //   final updatedAuthorStyle = currentAuthorStyle.copyWith();
   //   emit(QuoteUpdated(updatedAuthorStyle: updatedAuthorStyle));
   // }
@@ -31,7 +31,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
   //   AuthorColorChangedEvent event,
   //   Emitter<AuthorState> emit,
   // ) {
-  //   final AuthorStyle currentAuthorStyle = _getCurrentAuthorStyle(state);
+  //   final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
 
   //   final updatedAuthorStyle = currentAuthorStyle.copyWith();
 
@@ -43,7 +43,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
     AuthorFontChangedEvent event,
     Emitter<AuthorState> emit,
   ) {
-    final AuthorStyle currentAuthorStyle = _getCurrentAuthorStyle(state);
+    final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
 
     final updatedAuthorStyle =
         currentAuthorStyle.copyWith(authorFont: event.newFont);
@@ -56,7 +56,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
     AuthorFontStyleChangedEvent event,
     Emitter<AuthorState> emit,
   ) {
-    final AuthorStyle currentAuthorStyle = _getCurrentAuthorStyle(state);
+    final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
 
     final updatedAuthorStyle =
         currentAuthorStyle.copyWith(authorFontStyle: event.newFontStyle);
@@ -69,7 +69,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
     AuthorSizeChangedEvent event,
     Emitter<AuthorState> emit,
   ) {
-    final AuthorStyle currentAuthorStyle = _getCurrentAuthorStyle(state);
+    final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
 
     final updatedAuthorStyle =
         currentAuthorStyle.copyWith(authorSize: event.newSize);
@@ -82,7 +82,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
     AuthorWeightChangedEvent event,
     Emitter<AuthorState> emit,
   ) {
-    final AuthorStyle currentAuthorStyle = _getCurrentAuthorStyle(state);
+    final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
 
     final updatedAuthorStyle =
         currentAuthorStyle.copyWith(authorWeight: event.newWeight);
@@ -95,7 +95,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
     AuthorAlignmentChangedEvent event,
     Emitter<AuthorState> emit,
   ) {
-    final AuthorStyle currentAuthorStyle = _getCurrentAuthorStyle(state);
+    final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
 
     final updatedAuthorStyle =
         currentAuthorStyle.copyWith(authorAlignment: event.newAlignment);
@@ -104,7 +104,7 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
   }
 
   // helper method to get current AuthorStyle with its properties
-  AuthorStyle _getCurrentAuthorStyle(AuthorState state) {
-    return state.updatedAuthorStyle;
-  }
+  // AuthorStyle _getCurrentAuthorStyle(State state) {
+  //   return ;
+  // }
 }

@@ -10,7 +10,7 @@ part 'wallpaper_state.dart';
 class WallpaperBloc extends Bloc<WallpaperEvent, WallpaperState> {
   WallpaperBloc() : super(WallpaperState(wallpaper: Wallpaper())) {
     on<WallpaperColorChangedEvent>((event, emit) {
-      emit(WallpaperState(wallpaper: Wallpaper(background: event.newWallpaperColor)));
+      emit(WallpaperState(wallpaper: Wallpaper(wallpaperColor: event.newWallpaperColor)));
     });
   }
 }

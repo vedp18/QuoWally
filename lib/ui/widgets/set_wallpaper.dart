@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,9 +11,9 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:ui' as ui;
 
 class SetWallPaper {
-  static final int FLAG_LOCK_SCREEN = 1;
-  static final int FLAG_HOME_SCREEN = 2;
-  static final int FLAG_BOTH_SCREEN = 3;
+  static const int FLAG_LOCK_SCREEN = 1;
+  static const int FLAG_HOME_SCREEN = 2;
+  static const int FLAG_BOTH_SCREEN = 3;
 
   // final TextEditingController _controller = TextEditingController();
   // String _quote = "";
@@ -23,7 +25,7 @@ class SetWallPaper {
     required final int which,
     // required final Quote quote,
     required final Wallpaper wallpaper,
-    required final TextAlign textAlign,
+    // required final TextAlign textAlign,
   }) async {
     final Quote quote = wallpaper.quote!;
 
@@ -32,7 +34,7 @@ class SetWallPaper {
 
     // Background Color
     ///* Paint paint = Paint()..color = const Color.fromARGB(255, 29, 19, 17);
-    Paint paint = Paint()..color = wallpaper.background;
+    Paint paint = Paint()..color = wallpaper.wallpaperColor;
 
     canvas.drawRect(Rect.fromLTWH(0, 0, wd, ht), paint);
 
@@ -58,9 +60,9 @@ class SetWallPaper {
     quotePainter.layout(minWidth: 0, maxWidth: (wd - 240));
 
     double dx;
-    if (textAlign == TextAlign.center) {
+    if (quote.quoteStyle.quoteAlignment == TextAlign.center) {
       dx = (wd - quotePainter.width) / 2;
-    } else if (textAlign == TextAlign.right) {
+    } else if (quote.quoteStyle.quoteAlignment == TextAlign.right) {
       dx = wd - quotePainter.width - 120; // small padding from right
     } else {
       dx = 120; // left alignment padding
@@ -71,20 +73,19 @@ class SetWallPaper {
 
 
 
-    final authorAlignment = Alignment.bottomRight;
-    // final authorAlignment = quote.authorStyle.quoteAlignment;
-    // auther painter
+    final authorAlignment = quote.authorStyle.authorAlignment;
+    // author painter
     final authorPainter = TextPainter(
       text: TextSpan(
         text: "- ${quote.author}",
         style: GoogleFonts.getFont(
-          quote.authorStyle!.authorFont,
+          quote.authorStyle.authorFont,
           textStyle: TextStyle(
             height: 1.2,
             color: quote.quoteStyle.quoteColor,
-            fontSize: quote.authorStyle!.authorSize * 3,
-            fontStyle: quote.authorStyle!.authorFontStyle,
-            fontWeight: quote.authorStyle!.authorWeight,
+            fontSize: quote.authorStyle.authorSize * 3,
+            fontStyle: quote.authorStyle.authorFontStyle,
+            fontWeight: quote.authorStyle.authorWeight,
           ),
         ),
       ),

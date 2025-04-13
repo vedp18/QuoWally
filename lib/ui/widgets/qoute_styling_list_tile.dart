@@ -1,62 +1,76 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/author_bloc/author_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/wallpaper_bloc/wallpaper_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
-import 'package:flutter_quote_wallpaper_app/ui/screens/quotes_list_screen.dart';
-import 'package:flutter_quote_wallpaper_app/utils/alignments_list.dart';
-import 'package:flutter_quote_wallpaper_app/utils/colors_list.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
-import 'package:flutter_quote_wallpaper_app/utils/font_style_list.dart';
-import 'package:flutter_quote_wallpaper_app/utils/font_weight_list.dart';
-import 'package:flutter_quote_wallpaper_app/utils/fonts_list.dart';
-import 'package:flutter_quote_wallpaper_app/utils/size_list.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/select_quote_tile.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_alignment_tile.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_color_tile.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_font_style_tile.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_font_tile.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_size_tile.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_weight_tile.dart';
+import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/wallpaper_color_tile.dart';
 
-class QuoteStylingListTile extends StatefulWidget {
-  final QuoteStyle currentQuoteStyle;
-  final Color wallpaperColor;
-  final AuthorStyle currentAuthorStyle;
+// import 'package:dropdown_button2/dropdown_button2.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_quote_wallpaper_app/blocs/author_bloc/author_bloc.dart';
+// import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
+// import 'package:flutter_quote_wallpaper_app/blocs/wallpaper_bloc/wallpaper_bloc.dart';
+// import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
+// import 'package:flutter_quote_wallpaper_app/ui/screens/quotes_list_screen.dart';
+// import 'package:flutter_quote_wallpaper_app/utils/alignments_list.dart';
+// import 'package:flutter_quote_wallpaper_app/utils/colors_list.dart';
+// import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
+// import 'package:flutter_quote_wallpaper_app/utils/font_style_list.dart';
+// import 'package:flutter_quote_wallpaper_app/utils/font_weight_list.dart';
+// import 'package:flutter_quote_wallpaper_app/utils/fonts_list.dart';
+// import 'package:flutter_quote_wallpaper_app/utils/size_list.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
-  const QuoteStylingListTile({
+class QuoteStylingList extends StatefulWidget {
+  // final QuoteStyle currentQuoteStyle;
+  // final Color wallpaperColor;
+  // final AuthorStyle currentAuthorStyle;
+
+  const QuoteStylingList({
     super.key,
-    required this.currentQuoteStyle,
-    required this.wallpaperColor,
-    required this.currentAuthorStyle,
+    // required this.currentQuoteStyle,
+    // required this.wallpaperColor,
+    // required this.currentAuthorStyle,
   });
 
   @override
-  State<QuoteStylingListTile> createState() => _QuoteStylingListTileState();
+  State<QuoteStylingList> createState() => _QuoteStylingListState();
 }
 
-class _QuoteStylingListTileState extends State<QuoteStylingListTile> {
+class _QuoteStylingListState extends State<QuoteStylingList> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        _buildSelectTextColorTile(widget.currentQuoteStyle),
-        Divider(height: 0, color: Colors.brown[100]),
-        _buildSelectBackgroundColorTile(widget.wallpaperColor),
-        Divider(height: 0, color: Colors.brown[100]),
-        _buildTextSizeTile(widget.currentQuoteStyle, widget.currentAuthorStyle),
-        Divider(height: 0, color: Colors.brown[100]),
-        _buildTextFontTile(widget.currentQuoteStyle, widget.currentAuthorStyle),
-        Divider(height: 0, color: Colors.brown[100]),
-        _buildTextWeightTile(
-            widget.currentQuoteStyle, widget.currentAuthorStyle),
-        Divider(height: 0, color: Colors.brown[100]),
-        _buildTextFontStyleTile(
-            widget.currentQuoteStyle, widget.currentAuthorStyle),
-        Divider(height: 0, color: Colors.brown[100]),
-        _buildTextAlignmentTile(
-            widget.currentQuoteStyle, widget.currentAuthorStyle),
-        Divider(height: 0, color: Colors.brown[100]),
-        _buildSelectQuoteTile(widget.currentQuoteStyle),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextColorTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+          WallpaperColorTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+          TextSizeTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+          TextFontTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+          TextWeightTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+          TextFontStyleTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+          TextAlignmentTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+          SelectQuoteTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+        ],
+      ),
     );
   }
+
+/*
+
+
 
   Widget _buildSelectTextColorTile(QuoteStyle currentQuoteStyle) {
     return Padding(
@@ -917,4 +931,7 @@ class _QuoteStylingListTileState extends State<QuoteStylingListTile> {
       ),
     );
   }
+
+
+*/
 }

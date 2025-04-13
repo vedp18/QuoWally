@@ -7,16 +7,18 @@ class Quote {
   final String quote;
   final String author;
   final QuoteStyle quoteStyle;
-  AuthorStyle? authorStyle;
+  
+  // because updated authorStyle will assigned later 
+  // (when user finally saves[for autoChanged quote] or 
+  // clicked set wallpaper button)
+  AuthorStyle authorStyle;
 
   Quote({
     required this.quote,
     this.author = "Shri Krishna Vasudeva Yadav",
     required this.quoteStyle,
-    this.authorStyle,
+    required this.authorStyle,
   });
-
- 
 
   Quote copyWith({
     String? quote,

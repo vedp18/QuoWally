@@ -13,7 +13,7 @@ class QuoteStyle {
 
   QuoteStyle({
     this.quoteSize = 16,
-    this.quoteFont = "Tiro Devanagari Sanskrit",
+    this.quoteFont = 'Fondamento',
     this.quoteFontStyle = FontStyle.normal,
     this.quoteWeight = FontWeight.w600,
     this.quoteAlignment= TextAlign.left,
