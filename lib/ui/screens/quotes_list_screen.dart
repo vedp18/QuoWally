@@ -54,8 +54,6 @@ class QuotesListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    DataProvider.getQuote();
     
     return Scaffold(
       appBar: AppBar(
