@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 part of 'author_bloc.dart';
 
 @immutable
@@ -5,19 +7,20 @@ class AuthorState {
   final AuthorStyle updatedAuthorStyle;
 
   const AuthorState({required this.updatedAuthorStyle});
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'updatedAuthorStyle': updatedAuthorStyle.toMap(),
+    };
+  }
+
+  factory AuthorState.fromMap(Map<String, dynamic> map) {
+    return AuthorState(
+      updatedAuthorStyle: AuthorStyle.fromMap((map["updatedAuthorStyle"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory AuthorState.fromJson(String source) => AuthorState.fromMap(json.decode(source) as Map<String, dynamic>);
 }
-
-// final class AuthorInitial extends AuthorState {
-//   // final Quote quote = Quote(
-//   //   quote: "He who will not economize will have to agonize",
-//   //   // "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-//   //   // "ॐ असतो मा सद्गमय ।\nतमसो मा ज्योतिर्गमय ।\nमृत्योर्मा अमृतं गमय ।\nॐ शान्तिः शान्तिः शान्तिः ॥",
-//   //   author: "Brihadaranyaka Upanishad",
-//   //   quoteStyle: QuoteStyle(),
-//   // );
-
-// }
-
-// final class AuthorUpdated extends AuthorState {
-//   AuthorUpdated({required this.updatedAuthor});
-// }

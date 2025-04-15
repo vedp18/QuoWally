@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
+import 'package:flutter_quote_wallpaper_app/data/provider/data_provider.dart';
 
 class QuotesListScreen extends StatelessWidget {
   final List<Map<String, String>> quotes = [
@@ -53,6 +54,9 @@ class QuotesListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    DataProvider.getQuote();
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'author_event.dart';
 part 'author_state.dart';
 
-class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
+class AuthorBloc extends HydratedBloc<AuthorEvent, AuthorState> {
   AuthorBloc() : super(AuthorState(updatedAuthorStyle: AuthorStyle())) {
     // on<AuthorChangedEvent>(_onAuthorChangedEvent);
     // on<AuthorColorChangedEvent>(_onAuthorColorChangedEvent);
@@ -15,28 +18,6 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
     on<AuthorWeightChangedEvent>(_onAuthorWeightChangedEvent);
     on<AuthorAlignmentChangedEvent>(_onAuthorAlignmentChangedEvent);
   }
-
-  // // changing author
-  // void _onAuthorChangedEvent(
-  //   AuthorChangedEvent event,
-  //   Emitter<AuthorState> emit,
-  // ) {
-  //   final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
-  //   final updatedAuthorStyle = currentAuthorStyle.copyWith();
-  //   emit(QuoteUpdated(updatedAuthorStyle: updatedAuthorStyle));
-  // }
-
-  // // changing author color
-  // void _onAuthorColorChangedEvent(
-  //   AuthorColorChangedEvent event,
-  //   Emitter<AuthorState> emit,
-  // ) {
-  //   final AuthorStyle currentAuthorStyle = state.updatedAuthorStyle;
-
-  //   final updatedAuthorStyle = currentAuthorStyle.copyWith();
-
-  //   emit(AuthorState(updatedAuthorStyle: updatedAuthorStyle));
-  // }
 
   // changing quote font
   void _onAuthorFontChangedEvent(
@@ -101,6 +82,20 @@ class AuthorBloc extends Bloc<AuthorEvent, AuthorState> {
         currentAuthorStyle.copyWith(authorAlignment: event.newAlignment);
 
     emit(AuthorState(updatedAuthorStyle: updatedAuthorStyle));
+  }
+
+  @override
+  AuthorState? fromJson(Map<String, dynamic> json) {
+    // print("authorbloc - fromjson");
+    // print(json);
+    return AuthorState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(AuthorState state) {
+    // print("authorbloc - tojson");
+    // print(state.toMap());
+    return state.toMap();
   }
 
   // helper method to get current AuthorStyle with its properties

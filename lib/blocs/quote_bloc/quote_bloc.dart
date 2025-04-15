@@ -1,28 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
 import 'package:flutter_quote_wallpaper_app/models/quote.dart';
 import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'quote_event.dart';
 part 'quote_state.dart';
 
-class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
+class QuoteBloc extends HydratedBloc<QuoteEvent, QuoteState> {
   // finalQuote quote = ;
 
-  QuoteBloc()
-      : super(
-          QuoteState(
-            updatedQuote: Quote(
-              quote: "He who will not economize will have to agonize.",
-              // "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-              // "ॐ असतो मा सद्गमय ।\nतमसो मा ज्योतिर्गमय ।\nमृत्योर्मा अमृतं गमय ।\nॐ शान्तिः शान्तिः शान्तिः ॥",
-              author: "Brihadaranyaka Upanishad",
-              quoteStyle: QuoteStyle(),
-              authorStyle: AuthorStyle(),
-            ),
-          ),
-        ) {
+  QuoteBloc() : super(_initialState) {
     on<QuoteChangedEvent>(_onQuoteChangedEvent);
     on<QuoteColorChangedEvent>(_onQuoteColorChangedEvent);
     on<QuoteFontChangedEvent>(_onQuoteFontChangedEvent);
@@ -31,6 +22,18 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
     on<QuoteWeightChangedEvent>(_onQuoteWeightChangedEvent);
     on<QuoteAlignmentChangedEvent>(_onQuoteAlignmentChangedEvent);
   }
+
+  /// ---- INITIAL STATE----
+  static final _initialState = QuoteState(
+    updatedQuote: Quote(
+      quote: "He who will not economize will have to agonize..",
+      // "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+      // "ॐ असतो मा सद्गमय ।\nतमसो मा ज्योतिर्गमय ।\nमृत्योर्मा अमृतं गमय ।\nॐ शान्तिः शान्तिः शान्तिः ॥",
+      author: "Brihadaranyaka Upanishad",
+      quoteStyle: QuoteStyle(),
+      authorStyle: AuthorStyle(),
+    ),
+  );
 
   // changing quote
   void _onQuoteChangedEvent(
@@ -125,6 +128,21 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
 
     emit(QuoteState(
         updatedQuote: currentQuote.copyWith(quoteStyle: updatedStyle)));
+  }
+
+  @override
+  QuoteState? fromJson(Map<String, dynamic> json) {
+    // print("quoteBloc fromjson:    ");
+    // print(json);
+    return QuoteState.fromMap(json);
+    // return QuoteState.fromJson(jsonEncode(json));
+  }
+
+  @override
+  Map<String, dynamic>? toJson(QuoteState state) {
+    // print("quoteBloc tojson:    ");
+    // print(state.toMap());
+    return state.toMap();
   }
 
   // helper method to get current Quote with its properties
