@@ -39,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
     print("logical: $dpWd and physical: $physicalWd");
     print("logical: $dpHt and physical: $physicalHt");
 
-
     return Scaffold(
       drawer: Drawer(
         width: 280,

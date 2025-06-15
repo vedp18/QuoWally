@@ -10,7 +10,8 @@ class QuotesListScreen extends StatelessWidget {
       'author': "Walt Disney"
     },
     {
-      'quote': "ॐ असतो मा सद्गमय ।\nतमसो मा ज्योतिर्गमय ।\nमृत्योर्मा अमृतं गमय ।\nॐ शान्तिः शान्तिः शान्तिः ॥",
+      'quote':
+          "ॐ असतो मा सद्गमय ।\nतमसो मा ज्योतिर्गमय ।\nमृत्योर्मा अमृतं गमय ।\nॐ शान्तिः शान्तिः शान्तिः ॥",
       'author': "Brihadaranyaka Upanishad"
     },
     {
@@ -53,7 +54,6 @@ class QuotesListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -72,6 +72,43 @@ class QuotesListScreen extends StatelessWidget {
               context.read<QuoteBloc>().add(QuoteChangedEvent(
                   newQuoteText: quote['quote']!,
                   newAuthorText: quote['author'] ?? 'Unknown'));
+
+              Navigator.pop(context);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(milliseconds: 540),
+                  elevation: 5,
+                  backgroundColor: Colors.brown[50],
+                  behavior: SnackBarBehavior.floating,
+                  width: 200,
+                  // margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  // backgroundColor: ,
+                  content: Center(
+                    child: Text(
+                      "Quote Updated",
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ),
+                ),
+              );
+
+              // showModalBottomSheet(
+              //   context: context,
+              //   builder: (context) => Container(
+              //     padding: EdgeInsets.all(10),
+              //     child: Center(
+              //       child: Text(
+              //         "Quote Updated",
+              //         style: TextStyle(fontSize: 22),
+              //       ),
+              //     ),
+              //   ),
+              // );
             },
             child: Card(
               shape: RoundedRectangleBorder(

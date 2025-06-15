@@ -27,7 +27,7 @@ class _QuoteStylingListState extends State<QuoteStylingList> {
           TextColorTile(),
           Divider(height: 0, color: Colors.brown[100]),
           WallpaperColorTile(),
-          Divider(height: 0, color: Colors.brown[100]),
+            Divider(height: 0, color: Colors.brown[100]),
           TextSizeTile(),
           Divider(height: 0, color: Colors.brown[100]),
           TextFontTile(),

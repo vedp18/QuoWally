@@ -1,0 +1,2 @@
+D:/VS_CODE/Flutter/flutter_quote_wallpaper_app/android/app/.cxx/Debug/3510n81p/x86/CMakeFiles/edit_cache.dir
+D:/VS_CODE/Flutter/flutter_quote_wallpaper_app/android/app/.cxx/Debug/3510n81p/x86/CMakeFiles/rebuild_cache.dir

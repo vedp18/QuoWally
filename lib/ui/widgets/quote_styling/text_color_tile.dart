@@ -5,10 +5,8 @@ import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
 import 'package:flutter_quote_wallpaper_app/utils/quote_styling_values.dart';
 import 'package:logger/logger.dart';
 
-
-
 final Logger logger = Logger();
-int count = 0; 
+int count = 0;
 
 class TextColorTile extends StatelessWidget {
   const TextColorTile({super.key});
@@ -44,6 +42,7 @@ class TextColorTile extends StatelessWidget {
           SizedBox(
             height: 25,
             child: Row(
+              // alignment: WrapAlignment.spaceBetween,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // spacing: 14,
               children: [
@@ -85,7 +84,9 @@ class TextColorTile extends StatelessWidget {
                       items: QuoteStylingValues.colors.keys.map((Color value) {
                         return DropdownMenuItem<Color>(
                           value: value,
-                          child: Row(
+                          child:
+                              // Text("Testing"),
+                              Row(
                             // mainAxisSize: MainAxisSize.min,
                             spacing: 10,
                             children: [

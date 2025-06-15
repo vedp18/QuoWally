@@ -18,7 +18,7 @@ class QuoteStyle {
     this.quoteFontStyle = FontStyle.normal,
     this.quoteWeight = FontWeight.w600,
     this.quoteAlignment = TextAlign.left,
-    this.quoteColor = const Color.from(alpha: 1, red: 0.306, green: 0.204, blue: 0.18),
+    this.quoteColor = const Color.from(alpha: 1, red: 0.62, green: 0.62, blue: 0.62),
     // this.wallpaperColor = const Color.fromARGB(255, 29, 19, 17)
   });
 

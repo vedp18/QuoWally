@@ -4,13 +4,13 @@ class QuoteStylingValues {
   
   /// colors
   static final Map<Color, String> colors = {
-    const Color.fromARGB(255, 158, 158, 158): "Grey",
-    const Color.fromARGB(26, 255, 255, 255): "White10",
-    const Color.fromARGB(255, 0, 0, 0): "Black",
-    const Color.fromARGB(255, 121, 85, 72): "Brown",
-    const Color.fromARGB(255, 78, 52, 46): "Dark Brown",
-    const Color.fromARGB(255, 29, 19, 17): "Darkest Brown",
-    const Color.fromARGB(255, 103, 58, 183): "Deep Purple",
+    const Color.from(alpha: 1, red: 0.62, green: 0.62, blue: 0.62): "Grey",
+    const Color.from(alpha: 0.102, red: 1, green: 1, blue: 1): "White10",
+    const Color.from(alpha: 1, red: 0, green: 0, blue: 0): "Black",
+    const Color.from(alpha: 1, red: 0.475, green: 0.333, blue: 0.282): "Brown",
+    const Color.from(alpha: 1, red: 0.306, green: 0.204, blue: 0.18): "Dark Brown",
+    const Color.from(alpha: 1, red: 0.114, green: 0.075, blue: 0.067): "Darkest Brown",
+    const Color.from(alpha: 1, red: 0.404, green: 0.227, blue: 0.718): "Deep Purple",
   };
 
   /// alignments

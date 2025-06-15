@@ -36,6 +36,28 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 wallpaper: _getUpdatedWallpaper(context),
                 // textAlign: textAlign,
               );
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(milliseconds: 540),
+                  elevation: 5,
+                  backgroundColor: Colors.brown[50],
+                  behavior: SnackBarBehavior.floating,
+                  width: 300,
+                  // margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  // backgroundColor: ,
+                  content: Center(
+                    child: Text(
+                      "Wallpaper set on Lock Screen",
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ),
+                ),
+              );
             },
           ),
           _buildCustomButton(
@@ -51,6 +73,28 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 // quote: currentQuote,
                 wallpaper: _getUpdatedWallpaper(context),
                 // textAlign: textAlign,
+              );
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(milliseconds: 540),
+                  elevation: 5,
+                  backgroundColor: Colors.brown[50],
+                  behavior: SnackBarBehavior.floating,
+                  width: 300,
+                  // margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  // backgroundColor: ,
+                  content: Center(
+                    child: Text(
+                      "Wallpaper set on Home Screen",
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ),
+                ),
               );
             },
           ),
@@ -68,6 +112,28 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 // quote: currentQuote,
                 wallpaper: _getUpdatedWallpaper(context),
                 // textAlign: textAlign,
+              );
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(milliseconds: 540),
+                  elevation: 5,
+                  backgroundColor: Colors.brown[50],
+                  behavior: SnackBarBehavior.floating,
+                  width: 300,
+                  // margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  // backgroundColor: ,
+                  content: Center(
+                    child: Text(
+                      "Wallpaper set on both Screens",
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ),
+                ),
               );
             },
           ),

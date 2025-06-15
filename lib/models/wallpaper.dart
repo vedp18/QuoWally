@@ -12,7 +12,7 @@ class Wallpaper {
 
   Wallpaper({
     this.wallpaperColor =
-        const Color.from(alpha: 1, red: 0.114, green: 0.075, blue: 0.067),
+        const Color.from(alpha: 1, red: 0, green: 0, blue: 0),
     this.quote,
   });
 
