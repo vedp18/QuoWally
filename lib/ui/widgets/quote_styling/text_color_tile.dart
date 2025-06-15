@@ -1,8 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/utils/quote_styling_values.dart';
+import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
+import 'package:quowally/utils/quote_styling_values.dart';
 import 'package:logger/logger.dart';
 
 final Logger logger = Logger();

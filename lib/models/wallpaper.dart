@@ -2,9 +2,9 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
+import 'package:quowally/models/author_style.dart';
+import 'package:quowally/models/quote.dart';
+import 'package:quowally/models/quote_style.dart';
 
 class Wallpaper {
   final Color wallpaperColor;

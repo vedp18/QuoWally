@@ -1,0 +1,1 @@
+D:\VS_CODE\Flutter\quowally\build\app\intermediates\cxx\Debug\4g2h5x25\obj\arm64-v8a

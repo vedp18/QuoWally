@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_quote_wallpaper_app/models/wallpaper.dart';
+import 'package:quowally/models/wallpaper.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'wallpaper_event.dart';

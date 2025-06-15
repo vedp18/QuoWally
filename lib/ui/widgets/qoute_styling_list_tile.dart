@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/select_quote_tile.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_alignment_tile.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_color_tile.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_font_style_tile.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_font_tile.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_size_tile.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/text_weight_tile.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_styling/wallpaper_color_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/select_quote_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/text_alignment_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/text_color_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/text_font_style_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/text_font_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/text_size_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/text_weight_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/wallpaper_color_tile.dart';
 
 class QuoteStylingList extends StatefulWidget {
   const QuoteStylingList({

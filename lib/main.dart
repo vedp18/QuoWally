@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/app_bloc_oberver.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/author_bloc/author_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/wallpaper_bloc/wallpaper_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/ui/screens/home_screen.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:flutter_quote_wallpaper_app/qoute.dart';
+import 'package:quowally/app_bloc_oberver.dart';
+import 'package:quowally/blocs/author_bloc/author_bloc.dart';
+import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
+import 'package:quowally/blocs/wallpaper_bloc/wallpaper_bloc.dart';
+import 'package:quowally/ui/screens/home_screen.dart';
+// import 'package:quowally/qoute.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

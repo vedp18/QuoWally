@@ -4,8 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote.dart';
-import 'package:flutter_quote_wallpaper_app/models/wallpaper.dart';
+import 'package:quowally/models/quote.dart';
+import 'package:quowally/models/wallpaper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:ui' as ui;

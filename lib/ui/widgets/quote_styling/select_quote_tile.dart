@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quote_wallpaper_app/ui/screens/quotes_list_screen.dart';
+import 'package:quowally/ui/screens/quotes_list_screen.dart';
 
 class SelectQuoteTile extends StatelessWidget {
   const SelectQuoteTile({super.key});

@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'dart:convert';
-
-import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
+import 'package:quowally/models/author_style.dart';
+import 'package:quowally/models/quote_style.dart';
 
 class Quote {
   final String quote;

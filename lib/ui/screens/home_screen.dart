@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/copy_share_row.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/custom_bottom_navigation_bar.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/quote_preview.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/qoute_styling_list_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quowally/ui/widgets/copy_share_row.dart';
+import 'package:quowally/ui/widgets/custom_bottom_navigation_bar.dart';
+import 'package:quowally/ui/widgets/qoute_styling_list_tile.dart';
+import 'package:quowally/ui/widgets/quote_preview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

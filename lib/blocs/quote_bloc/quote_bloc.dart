@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
+import 'package:quowally/models/author_style.dart';
+import 'package:quowally/models/quote.dart';
+import 'package:quowally/models/quote_style.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'quote_event.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/author_bloc/author_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/wallpaper_bloc/wallpaper_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote.dart';
-import 'package:flutter_quote_wallpaper_app/models/wallpaper.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/set_wallpaper.dart';
+import 'package:quowally/blocs/author_bloc/author_bloc.dart';
+import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
+import 'package:quowally/blocs/wallpaper_bloc/wallpaper_bloc.dart';
+import 'package:quowally/models/quote.dart';
+import 'package:quowally/models/wallpaper.dart';
+import 'package:quowally/ui/widgets/set_wallpaper.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {

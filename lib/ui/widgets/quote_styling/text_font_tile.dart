@@ -1,9 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/author_bloc/author_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/utils/quote_styling_values.dart';
+import 'package:quowally/blocs/author_bloc/author_bloc.dart';
+import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
+import 'package:quowally/utils/quote_styling_values.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:logger/logger.dart';

@@ -1,4 +1,4 @@
-package com.example.flutter_quote_wallpaper_app
+package com.vpx.quowally
 
 import android.app.WallpaperManager
 import android.graphics.BitmapFactory

@@ -16,7 +16,7 @@
   -->
 
     <application
-        android:label="flutter_quote_wallpaper_app"
+        android:label="QuoWally"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
