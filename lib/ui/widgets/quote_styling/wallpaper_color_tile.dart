@@ -4,17 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quowally/blocs/wallpaper_bloc/wallpaper_bloc.dart';
 import 'package:quowally/utils/quote_styling_values.dart';
 
-import 'package:logger/logger.dart';
-
-final Logger logger = Logger();
-int count = 0;
 
 class WallpaperColorTile extends StatelessWidget {
   const WallpaperColorTile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    logger.d("WallpaperColorTile build - ${++count}");
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(

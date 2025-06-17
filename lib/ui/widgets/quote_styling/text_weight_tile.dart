@@ -5,17 +5,12 @@ import 'package:quowally/blocs/author_bloc/author_bloc.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/utils/quote_styling_values.dart';
 
-import 'package:logger/logger.dart';
-
-final Logger logger = Logger();
-int count = 0;
 
 class TextWeightTile extends StatelessWidget {
   const TextWeightTile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    logger.d("TextWeightTile build -${++count}");
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(

@@ -6,17 +6,13 @@ import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/utils/quote_styling_values.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:logger/logger.dart';
 
-final Logger logger = Logger();
-int count = 0;
 
 class TextFontTile extends StatelessWidget {
   const TextFontTile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    logger.d("TextFontTile build -${++count}");
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(

@@ -4,6 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quowally/app_bloc_oberver.dart';
 import 'package:quowally/blocs/author_bloc/author_bloc.dart';
+import 'package:quowally/blocs/auto_change_quote_bloc/auto_change_quote_bloc.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/blocs/wallpaper_bloc/wallpaper_bloc.dart';
 import 'package:quowally/ui/screens/home_screen.dart';
@@ -13,8 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory:
-          HydratedStorageDirectory((await getApplicationDocumentsDirectory()).path));
+      storageDirectory: HydratedStorageDirectory(
+          (await getApplicationDocumentsDirectory()).path));
 
   Bloc.observer = AppBlocObserver();
   runApp(QuoteWallpaperApp());
@@ -36,6 +37,9 @@ class QuoteWallpaperApp extends StatelessWidget {
         BlocProvider(
           create: (_) => AuthorBloc(),
         ),
+        BlocProvider(
+          create: (_) => AutoChangeQuoteBloc(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

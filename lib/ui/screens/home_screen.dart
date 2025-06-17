@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quowally/ui/screens/auto_change_config_screen.dart';
 import 'package:quowally/ui/widgets/copy_share_row.dart';
 import 'package:quowally/ui/widgets/custom_bottom_navigation_bar.dart';
 import 'package:quowally/ui/widgets/qoute_styling_list_tile.dart';
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
-              height: 100,
+              height: 120,
               child: DrawerHeader(
                 child: Text(
                   'QuoWally',
@@ -69,10 +70,17 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () => _navigateTo('Custom Lists', context),
             ),
             ListTile(
-              leading: Icon(Icons.schedule),
-              title: const Text('Set Auto Change Quote'),
-              onTap: () => _navigateTo('Auto Change', context),
-            ),
+                leading: Icon(Icons.schedule),
+                title: const Text('Set Auto Change Quote'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AutoChangeConfigScreen(),
+                    ),
+                  );
+                }),
           ],
         ),
       ),

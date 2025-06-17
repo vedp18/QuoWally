@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quowally/ui/widgets/quote_styling/select_quote_list_tile.dart';
 import 'package:quowally/ui/widgets/quote_styling/select_quote_tile.dart';
 import 'package:quowally/ui/widgets/quote_styling/text_alignment_tile.dart';
 import 'package:quowally/ui/widgets/quote_styling/text_color_tile.dart';
@@ -6,11 +7,14 @@ import 'package:quowally/ui/widgets/quote_styling/text_font_style_tile.dart';
 import 'package:quowally/ui/widgets/quote_styling/text_font_tile.dart';
 import 'package:quowally/ui/widgets/quote_styling/text_size_tile.dart';
 import 'package:quowally/ui/widgets/quote_styling/text_weight_tile.dart';
+import 'package:quowally/ui/widgets/quote_styling/update_quote_interval.dart';
 import 'package:quowally/ui/widgets/quote_styling/wallpaper_color_tile.dart';
 
 class QuoteStylingList extends StatefulWidget {
+  final bool fromAutoChange;
+
   const QuoteStylingList({
-    super.key,
+    super.key, this.fromAutoChange = false,
   });
 
   @override
@@ -27,7 +31,7 @@ class _QuoteStylingListState extends State<QuoteStylingList> {
           TextColorTile(),
           Divider(height: 0, color: Colors.brown[100]),
           WallpaperColorTile(),
-            Divider(height: 0, color: Colors.brown[100]),
+          Divider(height: 0, color: Colors.brown[100]),
           TextSizeTile(),
           Divider(height: 0, color: Colors.brown[100]),
           TextFontTile(),
@@ -38,7 +42,10 @@ class _QuoteStylingListState extends State<QuoteStylingList> {
           Divider(height: 0, color: Colors.brown[100]),
           TextAlignmentTile(),
           Divider(height: 0, color: Colors.brown[100]),
-          SelectQuoteTile(),
+          widget.fromAutoChange ? SelectQuoteListTile(): SelectQuoteTile(),
+          Divider(height: 0, color: Colors.brown[100]),
+          if(widget.fromAutoChange)
+            UpdateQuoteInterval(),
           Divider(height: 0, color: Colors.brown[100]),
         ],
       ),

@@ -1,23 +1,22 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
-import 'package:quowally/utils/quote_styling_values.dart';
+import 'package:quowally/blocs/auto_change_quote_bloc/auto_change_quote_bloc.dart';
+import 'package:quowally/utils/auto_change_quote_values.dart';
 
-
-class TextColorTile extends StatelessWidget {
-  const TextColorTile({super.key});
-
+class UpdateQuoteInterval extends StatelessWidget {
+  const UpdateQuoteInterval({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           RichText(
             text: TextSpan(
-              text: 'Text Color: ',
+              text: 'Select quote change interval: ',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.brown[500],
@@ -26,7 +25,7 @@ class TextColorTile extends StatelessWidget {
               children: [
                 TextSpan(
                   text:
-                      'Sets the text color of the quote and author name. For instance, if you have a dark wallpaper then set the color to white.',
+                      'Updates the quote after selected time interval.',
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Colors.brown[300],
@@ -43,18 +42,18 @@ class TextColorTile extends StatelessWidget {
               // spacing: 14,
               children: [
                 Text(
-                  'Text Color:',
+                  'Quote Change Interval:',
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.brown[700],
                   ),
                 ),
-                BlocSelector<QuoteBloc, QuoteState, Color>(
+                BlocSelector<AutoChangeQuoteBloc, AutoChangeQuoteState, Duration>(
                   selector: (state) {
-                    return state.updatedQuote.quoteStyle.quoteColor;
+                    return state.interval;
                   },
-                  builder: (context, quoteColor) {
-                    return DropdownButton2<Color>(
+                  builder: (context, interval) {
+                    return DropdownButton2<Duration>(
                       buttonStyleData: ButtonStyleData(
                         width: 171,
                       ),
@@ -64,7 +63,7 @@ class TextColorTile extends StatelessWidget {
                       ),
                       isExpanded: true,
                       // menuWidth: 150,
-                      value: quoteColor,
+                      value: interval,
                       // context
                       //     .read<QuoteBloc>()
                       //     .state
@@ -73,31 +72,19 @@ class TextColorTile extends StatelessWidget {
                       //     .quoteColor,
                       onChanged: (value) {
                         context
-                            .read<QuoteBloc>()
-                            .add(QuoteColorChangedEvent(newColor: value!));
+                            .read<AutoChangeQuoteBloc>()
+                            .add(UpdateInterval(interval: value!));
                       },
                       underline: const SizedBox(),
-                      items: QuoteStylingValues.colors.keys.map((Color value) {
-                        return DropdownMenuItem<Color>(
+                      items: AutoChangeQuoteValues.quoteChangeInterval.keys.map((Duration value) {
+                        return DropdownMenuItem<Duration>(
                           value: value,
                           child:
-                              // Text("Testing"),
-                              Row(
-                            // mainAxisSize: MainAxisSize.min,
-                            spacing: 10,
-                            children: [
-                              Container(
-                                width: 8,
-                                height: 8,
-                                color: value,
-                              ),
                               Text(
-                                QuoteStylingValues.colors[value]!,
+                                AutoChangeQuoteValues.quoteChangeInterval[value]!,
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black),
                               ),
-                            ],
-                          ),
                         );
                       }).toList(),
                     );
