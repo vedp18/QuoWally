@@ -6,6 +6,7 @@ import 'package:quowally/app_bloc_oberver.dart';
 import 'package:quowally/blocs/author_bloc/author_bloc.dart';
 import 'package:quowally/blocs/auto_change_quote_bloc/auto_change_quote_bloc.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
+import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/blocs/wallpaper_bloc/wallpaper_bloc.dart';
 import 'package:quowally/ui/screens/home_screen.dart';
 // import 'package:quowally/qoute.dart';
@@ -39,7 +40,10 @@ class QuoteWallpaperApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => AutoChangeQuoteBloc(),
-        )
+        ),
+        BlocProvider(
+          create: (_) => QuoteListBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

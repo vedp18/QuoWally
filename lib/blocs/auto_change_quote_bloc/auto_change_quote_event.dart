@@ -9,11 +9,17 @@ class ToggleAutoChange extends AutoChangeQuoteEvent {
 }
 
 class UpdateQuoteList extends AutoChangeQuoteEvent {
-  final String listId;
-  UpdateQuoteList({required this.listId});
+  final QuoteList newQuoteList;
+  // final String listId;
+  UpdateQuoteList({required this.newQuoteList});
 }
 
 class UpdateInterval extends AutoChangeQuoteEvent {
   final Duration interval;
   UpdateInterval({required this.interval});
+}
+
+class UpdateScreen extends AutoChangeQuoteEvent {
+  final int screen;
+  UpdateScreen({required this.screen});
 }

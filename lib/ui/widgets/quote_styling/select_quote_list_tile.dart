@@ -1,14 +1,14 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
-import 'package:quowally/utils/auto_change_quote_values.dart';
-import 'package:quowally/utils/quote_styling_values.dart';
+import 'package:quowally/blocs/auto_change_quote_bloc/auto_change_quote_bloc.dart';
+import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
+import 'package:quowally/models/quote_list.dart';
 
 class SelectQuoteListTile extends StatelessWidget {
   const SelectQuoteListTile({super.key});
 
-  final String quoteList = "Quowally Quote List";
+  // final String quoteList = "Quowally Quote List";
 
   @override
   Widget build(BuildContext context) {
@@ -51,41 +51,58 @@ class SelectQuoteListTile extends StatelessWidget {
                     color: Colors.brown[700],
                   ),
                 ),
-                DropdownButton2<String>(
-                  buttonStyleData: ButtonStyleData(
-                    width: 171,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    width: 150,
-                    maxHeight: 300,
-                  ),
-                  isExpanded: true,
-                  // menuWidth: 150,
-                  value: quoteList,
-                  // context
-                  //     .read<QuoteBloc>()
-                  //     .state
-                  //     .updatedQuote
-                  //     .quoteStyle
-                  //     .quoteColor,
-                  onChanged: (value) {},
-                  underline: const SizedBox(),
-                  items:
-                      AutoChangeQuoteValues.quoteList.keys.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Row(
-                        // mainAxisSize: MainAxisSize.min,
-                        spacing: 10,
-                        children: [
-                          Text(
-                            AutoChangeQuoteValues.quoteList[value]!,
-                            style: TextStyle(fontSize: 12, color: Colors.black),
+                BlocSelector<QuoteListBloc, QuoteListState, List<QuoteList>>(
+                  selector: (state) {
+                    return state.lists;
+                  },
+                  builder: (context, quoteLists) {
+                    print(" lenght: ${quoteLists.length}");
+                    return BlocSelector<AutoChangeQuoteBloc,
+                        AutoChangeQuoteState, QuoteList>(
+                      selector: (state) {
+                        return state.selectedQuoteList;
+                      },
+                      builder: (context, state) {
+                        return DropdownButton2<QuoteList>(
+                          buttonStyleData: ButtonStyleData(
+                            width: 171,
                           ),
-                        ],
-                      ),
+                          dropdownStyleData: DropdownStyleData(
+                            width: 150,
+                            maxHeight: 300,
+                          ),
+                          isExpanded: true,
+                          // menuWidth: 150,
+                          value: quoteLists.contains(state)
+                              ? state
+                              : quoteLists.last,
+                          //  quoteLists.contains(state)
+                          //     ? state.name
+                          //     : quoteLists.first.name,
+                          onChanged: (value) {
+                            // final selectedQuoteList = quoteLists.firstWhere(
+                            //   (q) => q.name == value,
+                            // );
+                            print(value!.name);
+                            context.read<AutoChangeQuoteBloc>().add(
+                                  UpdateQuoteList(newQuoteList: value),
+                                );
+                          },
+                          underline: const SizedBox(),
+                          items: quoteLists.map((quoteList) {
+                            return DropdownMenuItem<QuoteList>(
+                              value: quoteList,
+                              child: Text(
+                                quoteList.name,
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.black),
+                              ),
+                            );
+                          }).toList(),
+                        );
+                      },
                     );
-                  }).toList(),
+                  },
                 ),
               ],
             ),

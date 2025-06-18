@@ -1,4 +1,11 @@
 class AutoChangeQuoteValues {
+
+  static Map<int, String> screen = {
+    1 : "Lock Screen",
+    2 : "Home Screen",
+    3 : "Both Screen",
+  };
+
   static Map<Duration, String> quoteChangeInterval = {
     Duration(hours: 1): "1 Hour",
     Duration(hours: 2): "2 Hours",

@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'dart:convert';
+
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:quowally/models/quote_list.dart';
 
 part 'auto_change_quote_event.dart';
 part 'auto_change_quote_state.dart';
@@ -13,11 +16,15 @@ class AutoChangeQuoteBloc extends HydratedBloc<AutoChangeQuoteEvent, AutoChangeQ
     });
 
     on<UpdateQuoteList>((event, emit) {
-      emit(state.copyWith(selectedQuoteList: event.listId));
+      emit(state.copyWith(selectedQuoteList: event.newQuoteList));
     });
 
     on<UpdateInterval>((event, emit) {
       emit(state.copyWith(interval: event.interval));
+    });
+
+    on<UpdateScreen>((event, emit) {
+      emit(state.copyWith(screen: event.screen));
     });
   }
 
