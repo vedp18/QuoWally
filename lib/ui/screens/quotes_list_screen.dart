@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
+import 'package:quowally/models/quote_list.dart';
 import 'package:quowally/utils/quowally_quotes.dart';
 
 class QuotesListScreen extends StatelessWidget {
+
+  final QuoteList quoteList; 
+  
   final List<Map<String, String>> quotes = QuoWallyQuotes.quotes;
 
-  QuotesListScreen({super.key});
+  QuotesListScreen({super.key, required this.quoteList});
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +18,20 @@ class QuotesListScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
-        title: const Text('Quotes'),
+        title: Text(quoteList.name),
         centerTitle: true,
       ),
       body: ListView.builder(
-        itemCount: quotes.length,
+        itemCount: quoteList.quotes.length,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemBuilder: (context, index) {
-          final quote = quotes[index];
+          final quote = quoteList.quotes[index];
 
           return GestureDetector(
             onTap: () {
               context.read<QuoteBloc>().add(QuoteChangedEvent(
-                  newQuoteText: quote['quote']!,
-                  newAuthorText: quote['author'] ?? 'Unknown'));
+                  newQuoteText: quote.quoteText,
+                  newAuthorText: quote.authorText));
 
               Navigator.pop(context);
 
@@ -80,7 +84,7 @@ class QuotesListScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      quote['quote'] ?? '',
+                      quote.quoteText,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
@@ -89,7 +93,7 @@ class QuotesListScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        "- ${quote['author'] ?? ''}",
+                        "- ${quote.authorText}",
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,

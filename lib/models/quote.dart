@@ -18,7 +18,7 @@ class Quote {
     required this.quote,
     this.author = "Shri Krishna Vasudeva Yadav",
     required this.quoteStyle,
-    required this.authorStyle,
+    required this.authorStyle
   });
 
   Quote copyWith({

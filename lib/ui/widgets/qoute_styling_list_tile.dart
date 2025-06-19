@@ -43,13 +43,17 @@ class _QuoteStylingListState extends State<QuoteStylingList> {
           Divider(height: 0, color: Colors.brown[100]),
           TextAlignmentTile(),
           Divider(height: 0, color: Colors.brown[100]),
-          widget.fromAutoChange ? SelectQuoteListTile(): SelectQuoteTile(),
-          Divider(height: 0, color: Colors.brown[100]),
+
           if(widget.fromAutoChange) ...[
+            SelectQuoteListTile(),
+            Divider(height: 0, color: Colors.brown[100]),
             UpdateQuoteInterval(),
             Divider(height: 0, color: Colors.brown[100]),
             SelectScreenTile(),
             Divider(height: 0, color: Colors.brown[100]),
+          ]
+          else ...[
+           SelectQuoteTile(),
           ],
         ],
       ),

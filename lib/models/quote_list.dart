@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:quowally/models/stored_quote.dart';
+
 class QuoteList {
   final String name;
   final bool isPrebuilt;
   final String filename;
+  List<StoredQuote> quotes = [];
 
-  const QuoteList({
+  QuoteList({
     required this.name,
     this.isPrebuilt = false,
     required this.filename,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
+import 'package:quowally/data/provider/quote_list_provider.dart';
 import 'package:quowally/ui/screens/auto_change_config_screen.dart';
 import 'package:quowally/ui/widgets/copy_share_row.dart';
 import 'package:quowally/ui/widgets/custom_bottom_navigation_bar.dart';
@@ -16,6 +19,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int rebuild = 0;
 
+  late final QuoteListProvider quoteListProvider;
+
   Color _backgroundColor = Colors.white;
   TextAlign textAlign = TextAlign.center;
 
@@ -28,17 +33,61 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
+    _loadQuoteLists();
+
+    // print("hello:  ${context.read<QuoteListBloc>().state.lists.first.quotes.length}");
+  }
+
+  Future<void> _loadQuoteLists() async {
+    final bloc = context.read<QuoteListBloc>();
+    // final provider = QuoteListProvider(bloc);
+
+    // Load prebuilt lists (from BLoC initial state)
+    // final prebuiltLists = bloc.state.lists.where((l) => l.isPrebuilt);
+    final prebuiltLists = [
+      {
+        "name": 'QuoWally Quotes',
+        "filename": 'assets/quotes/quowallyquotes.json',
+      },
+      {
+        "name": 'Motivational Quotes',
+        "filename": 'assets/quotes/motivationalquotes.json',
+      },
+      {
+        "name": 'Smart Quotes',
+        "filename": 'assets/quotes/smartquotes.json',
+      },
+    ];
+
+    for (final prebuilt in prebuiltLists) {
+      await quoteListProvider.loadPrebuiltQuoteList(
+        name: prebuilt['name']!,
+        filename: prebuilt['filename']!,
+      );
+    }
+
+    // Load custom lists (also from BLoC)
+    final customLists = bloc.state.lists.where((l) => !l.isPrebuilt);
+    for (final custom in customLists) {
+      await quoteListProvider.loadCustomQuoteList(custom.name);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(++rebuild);
+    // print(++rebuild);
 
-    final double dpWd = MediaQuery.of(context).size.width;
-    final double dpHt = MediaQuery.of(context).size.height;
+    // final double dpWd = MediaQuery.of(context).size.width;
+    // final double dpHt = MediaQuery.of(context).size.height;
 
-    final double physicalWd = dpWd * MediaQuery.devicePixelRatioOf(context);
-    final double physicalHt = dpHt * MediaQuery.devicePixelRatioOf(context);
+    // final double physicalWd = dpWd * MediaQuery.devicePixelRatioOf(context);
+    // final double physicalHt = dpHt * MediaQuery.devicePixelRatioOf(context);
 
-    print("logical: $dpWd and physical: $physicalWd");
-    print("logical: $dpHt and physical: $physicalHt");
+    // print("logical: $dpWd and physical: $physicalWd");
+    // print("logical: $dpHt and physical: $physicalHt");
 
     return Scaffold(
       drawer: Drawer(
@@ -59,16 +108,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            ListTile(
-              leading: Icon(Icons.favorite_border),
-              title: const Text('Favourite Quotes'),
-              onTap: () => _navigateTo('Favourites', context),
-            ),
-            ListTile(
-              leading: Icon(Icons.list_alt),
-              title: const Text('Custom Quote Lists'),
-              onTap: () => _navigateTo('Custom Lists', context),
-            ),
+            // ListTile(
+            //   leading: Icon(Icons.favorite_border),
+            //   title: const Text('Favourite Quotes'),
+            //   onTap: () => _navigateTo('Favourites', context),
+            // ),
+            // ListTile(
+            //   leading: Icon(Icons.list_alt),
+            //   title: const Text('Custom Quote Lists'),
+            //   onTap: () => _navigateTo('Custom Lists', context),
+            // ),
             ListTile(
                 leading: Icon(Icons.schedule),
                 title: const Text('Set Auto Change Quote'),
