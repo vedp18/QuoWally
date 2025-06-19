@@ -1,17 +1,19 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote.dart';
-import 'package:flutter_quote_wallpaper_app/models/wallpaper.dart';
+import 'package:quowally/models/quote.dart';
+import 'package:quowally/models/wallpaper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:ui' as ui;
 
 class SetWallPaper {
-  static final int FLAG_LOCK_SCREEN = 1;
-  static final int FLAG_HOME_SCREEN = 2;
-  static final int FLAG_BOTH_SCREEN = 3;
+  static const int FLAG_LOCK_SCREEN = 1;
+  static const int FLAG_HOME_SCREEN = 2;
+  static const int FLAG_BOTH_SCREEN = 3;
 
   // final TextEditingController _controller = TextEditingController();
   // String _quote = "";
@@ -23,7 +25,7 @@ class SetWallPaper {
     required final int which,
     // required final Quote quote,
     required final Wallpaper wallpaper,
-    required final TextAlign textAlign,
+    // required final TextAlign textAlign,
   }) async {
     final Quote quote = wallpaper.quote!;
 
@@ -32,12 +34,12 @@ class SetWallPaper {
 
     // Background Color
     ///* Paint paint = Paint()..color = const Color.fromARGB(255, 29, 19, 17);
-    Paint paint = Paint()..color = wallpaper.background;
+    Paint paint = Paint()..color = wallpaper.wallpaperColor;
 
     canvas.drawRect(Rect.fromLTWH(0, 0, wd, ht), paint);
 
-    // Draw Text
-    final textPainter = TextPainter(
+    // quote painter
+    final quotePainter = TextPainter(
       text: TextSpan(
         text: quote.quote,
         style: GoogleFonts.getFont(
@@ -55,40 +57,60 @@ class SetWallPaper {
       textDirection: TextDirection.ltr,
     );
 
-    // final textPainter2 = TextPainter(
-    //   text: TextSpan(
-    //     text: "-------",
-    //     style: GoogleFonts.cormorantInfant(
-    //       textStyle: TextStyle(
-    //         color: Colors.white,
-    //         fontSize: 50,
-    //       ),
-    //     ),
-    //   ),
-    //   textAlign: TextAlign.start,
-    //   textDirection: TextDirection.ltr,
-    // );
-    // textPainter.layout();
-    textPainter.layout(minWidth: 0, maxWidth: (wd - 240));
-    // textPainter2.layout(minWidth: 0, maxWidth: 120);
-
-    // textPainter2.paint(canvas, Offset(0, ht * 0.266));
-    // print(textPainter.width);
+    quotePainter.layout(minWidth: 0, maxWidth: (wd - 240));
 
     double dx;
-    if (textAlign == TextAlign.center) {
-      dx = (wd - textPainter.width) / 2;
-    } else if (textAlign == TextAlign.right) {
-      dx = wd - textPainter.width - 40; // small padding from right
+    if (quote.quoteStyle.quoteAlignment == TextAlign.center) {
+      dx = (wd - quotePainter.width) / 2;
+    } else if (quote.quoteStyle.quoteAlignment == TextAlign.right) {
+      dx = wd - quotePainter.width - 120; // small padding from right
     } else {
-      dx = 40; // left alignment padding
+      dx = 120; // left alignment padding
     }
 
     final double dy = ht * 0.266;
-    textPainter.paint(canvas, Offset(dx, dy));
+    quotePainter.paint(canvas, Offset(dx, dy));
 
-    // textPainter2.paint(canvas, Offset(wd - 120, ht * 0.266));
 
+
+    final authorAlignment = quote.authorStyle.authorAlignment;
+    // author painter
+    final authorPainter = TextPainter(
+      text: TextSpan(
+        text: "- ${quote.author}",
+        style: GoogleFonts.getFont(
+          quote.authorStyle.authorFont,
+          textStyle: TextStyle(
+            height: 1.2,
+            color: quote.quoteStyle.quoteColor,
+            fontSize: quote.authorStyle.authorSize * 3,
+            fontStyle: quote.authorStyle.authorFontStyle,
+            fontWeight: quote.authorStyle.authorWeight,
+          ),
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    );
+
+    authorPainter.layout(minWidth: 0, maxWidth: wd - 120); // keep side padding
+
+    // Convert Alignment to dx offset
+    double authorDx;
+    if (authorAlignment == Alignment.center || authorAlignment.x == 0) {
+      authorDx = (wd - authorPainter.width) / 2;
+    } else if (authorAlignment.x > 0) {
+      authorDx = wd - authorPainter.width - 120;
+    } else {
+      authorDx = 120;
+    }
+
+    final double authorDy = dy + quotePainter.height + 30; // below quote
+    authorPainter.paint(canvas, Offset(authorDx, authorDy));
+
+
+
+
+    // final painting on wallpaper
     final picture = recorder.endRecording();
     final img = await picture.toImage(wd.toInt(), ht.toInt());
     final byteData = await img.toByteData(format: ui.ImageByteFormat.png);

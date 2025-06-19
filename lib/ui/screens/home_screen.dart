@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/author_bloc/author_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/quote_bloc/quote_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/blocs/wallpaper_bloc/wallpaper_bloc.dart';
-import 'package:flutter_quote_wallpaper_app/models/author_style.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote_style.dart';
-import 'package:flutter_quote_wallpaper_app/models/wallpaper.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/set_wallpaper.dart';
-import 'package:flutter_quote_wallpaper_app/models/quote.dart';
-import 'package:flutter_quote_wallpaper_app/ui/widgets/qoute_list_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
+import 'package:quowally/data/provider/quote_list_provider.dart';
+import 'package:quowally/ui/screens/auto_change_config_screen.dart';
+import 'package:quowally/ui/widgets/copy_share_row.dart';
+import 'package:quowally/ui/widgets/custom_bottom_navigation_bar.dart';
+import 'package:quowally/ui/widgets/qoute_styling_list_tile.dart';
+import 'package:quowally/ui/widgets/quote_preview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,14 +17,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // late Quote currentQuote;
-  // Quote(
-  //     quote:
-  //         // "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-  //         "ॐ असतो मा सद्गमय ।\nतमसो मा ज्योतिर्गमय ।\nमृत्योर्मा अमृतं गमय ।\nॐ शान्तिः शान्तिः शान्तिः ॥",
-  //     author: "Brihadaranyaka Upanishad",
-  //     quoteStyle: QuoteStyle());
-  // String _currentQuote = "Be yourself; everyone else is already taken.";
+  int rebuild = 0;
+
+  late final QuoteListProvider quoteListProvider;
 
   Color _backgroundColor = Colors.white;
   TextAlign textAlign = TextAlign.center;
@@ -41,30 +33,61 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final double physicalWd = View.of(context).physicalSize.width;
-    final double physicalHt = View.of(context).physicalSize.height;
+  void initState() {
+    super.initState();
+    quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
+    _loadQuoteLists();
 
-    final currentQuote = context.select<QuoteBloc, Quote>((bloc) {
-      final state = bloc.state;
-      if (state is QuoteUpdated) return state.updatedQuote;
-      if (state is QuoteInitial) return state.quote;
-      return Quote(
-        quote: "Error fetching quote",
-        quoteStyle: QuoteStyle(),
-        authorStyle: AuthorStyle(),
+    // print("hello:  ${context.read<QuoteListBloc>().state.lists.first.quotes.length}");
+  }
+
+  Future<void> _loadQuoteLists() async {
+    final bloc = context.read<QuoteListBloc>();
+    // final provider = QuoteListProvider(bloc);
+
+    // Load prebuilt lists (from BLoC initial state)
+    // final prebuiltLists = bloc.state.lists.where((l) => l.isPrebuilt);
+    final prebuiltLists = [
+      {
+        "name": 'QuoWally Quotes',
+        "filename": 'assets/quotes/quowallyquotes.json',
+      },
+      {
+        "name": 'Motivational Quotes',
+        "filename": 'assets/quotes/motivationalquotes.json',
+      },
+      {
+        "name": 'Smart Quotes',
+        "filename": 'assets/quotes/smartquotes.json',
+      },
+    ];
+
+    for (final prebuilt in prebuiltLists) {
+      await quoteListProvider.loadPrebuiltQuoteList(
+        name: prebuilt['name']!,
+        filename: prebuilt['filename']!,
       );
-    });
+    }
 
-    final currentAuthorStyle = context.select<AuthorBloc, AuthorStyle>((bloc) {
-      final state = bloc.state;
-      return state.updatedAuthorStyle;
-    });
+    // Load custom lists (also from BLoC)
+    final customLists = bloc.state.lists.where((l) => !l.isPrebuilt);
+    for (final custom in customLists) {
+      await quoteListProvider.loadCustomQuoteList(custom.name);
+    }
+  }
 
-    final currentWallpaper = context.select<WallpaperBloc, Wallpaper>((bloc) {
-      final state = bloc.state;
-      return state.wallpaper;
-    });
+  @override
+  Widget build(BuildContext context) {
+    // print(++rebuild);
+
+    // final double dpWd = MediaQuery.of(context).size.width;
+    // final double dpHt = MediaQuery.of(context).size.height;
+
+    // final double physicalWd = dpWd * MediaQuery.devicePixelRatioOf(context);
+    // final double physicalHt = dpHt * MediaQuery.devicePixelRatioOf(context);
+
+    // print("logical: $dpWd and physical: $physicalWd");
+    // print("logical: $dpHt and physical: $physicalHt");
 
     return Scaffold(
       drawer: Drawer(
@@ -73,32 +96,40 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
-              height: 100,
+              height: 120,
               child: DrawerHeader(
                 child: Text(
-                  'Quote Wallpaper',
-                  style: GoogleFonts.lato(
-                    color: Colors.brown[500],
+                  'QuoWally',
+                  style: GoogleFonts.charm(
+                    color: Colors.brown[800],
                     fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
+            // ListTile(
+            //   leading: Icon(Icons.favorite_border),
+            //   title: const Text('Favourite Quotes'),
+            //   onTap: () => _navigateTo('Favourites', context),
+            // ),
+            // ListTile(
+            //   leading: Icon(Icons.list_alt),
+            //   title: const Text('Custom Quote Lists'),
+            //   onTap: () => _navigateTo('Custom Lists', context),
+            // ),
             ListTile(
-              leading: Icon(Icons.favorite_border),
-              title: const Text('Favourite Quotes'),
-              onTap: () => _navigateTo('Favourites', context),
-            ),
-            ListTile(
-              leading: Icon(Icons.list_alt),
-              title: const Text('Custom Quote Lists'),
-              onTap: () => _navigateTo('Custom Lists', context),
-            ),
-            ListTile(
-              leading: Icon(Icons.schedule),
-              title: const Text('Set Auto Change Quote'),
-              onTap: () => _navigateTo('Auto Change', context),
-            ),
+                leading: Icon(Icons.schedule),
+                title: const Text('Set Auto Change Quote'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AutoChangeConfigScreen(),
+                    ),
+                  );
+                }),
           ],
         ),
       ),
@@ -106,9 +137,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: _backgroundColor,
         scrolledUnderElevation: 0,
-        title: const Text("Quote Wallpaper"),
+        title: const Text("QuoWally"),
         foregroundColor: Colors.brown[800],
         centerTitle: true,
+        titleTextStyle: GoogleFonts.charm(
+            textStyle: TextStyle(
+                color: Colors.brown[800],
+                fontSize: 24,
+                fontWeight: FontWeight.bold)),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -116,218 +152,23 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Quote Preview
-            Container(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 10),
-              decoration: BoxDecoration(
-                color: currentWallpaper.background,
-                // color: Colors.brown[50],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                spacing: 3,
-                children: [
-                  Text(
-                    currentQuote.quote,
-                    style: GoogleFonts.getFont(
-                      currentQuote.quoteStyle.quoteFont,
-                      textStyle: TextStyle(
-                        height: 1.2,
-                        fontSize: currentQuote.quoteStyle.quoteSize,
-                        fontStyle: currentQuote.quoteStyle.quoteFontStyle,
-                        fontWeight: currentQuote.quoteStyle.quoteWeight,
-                        color: currentQuote.quoteStyle.quoteColor,
-                      ),
-                    ),
-                    textAlign: currentQuote.quoteStyle.quoteAlignment,
-                  ),
-
-                  // Text(
-                  //   currentQuote.quote,
-                  //   style: GoogleFonts.tiroDevanagariSanskrit(
-                  //       height: 1.2,
-                  //       fontSize: 16,
-                  //       fontWeight: FontWeight.w600,
-                  //       color: Colors.brown[800]),
-                  // ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      "-  ${currentQuote.author}",
-                      style: GoogleFonts.getFont(
-                        currentAuthorStyle.authorFont,
-                        textStyle: TextStyle(
-                          fontSize: currentAuthorStyle.authorSize,
-                          fontStyle: currentAuthorStyle.authorFontStyle,
-                          fontWeight: currentAuthorStyle.authorWeight,
-                          color: currentQuote.quoteStyle.quoteColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            QuotePreview(),
 
             // Row --> copy and share
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  style: TextButton.styleFrom(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                  ),
-                  onPressed: () async {
-                    final messenger = ScaffoldMessenger.of(context);
+            CopyShareRow(),
 
-                    await Clipboard.setData(
-                        ClipboardData(text: currentQuote.quote));
-
-                    messenger.showSnackBar(
-                      const SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        content: Text("Quote copied to clipboard"),
-                      ),
-                    );
-                    messenger.deactivate();
-                  },
-                  child: Text(
-                    "Copy",
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    "Share",
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
+            // Quote-Author Styling List
             Expanded(
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 6.0),
-                child: QuoteListTile(
-                  currentQuoteStyle: currentQuote.quoteStyle,
-                  wallpaperColor: currentWallpaper.background,
-                  currentAuthorStyle: currentAuthorStyle,
-                ),
+                child: QuoteStylingList(),
               ),
             )
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildCustomButton(
-              icon: Icons.screen_lock_portrait_sharp,
-              size: 27,
-              onPressed: () {
-                currentWallpaper.quote = currentQuote;
-
-                SetWallPaper.setWallpaper(
-                  wd: physicalWd,
-                  ht: physicalHt,
-                  which: SetWallPaper.FLAG_LOCK_SCREEN,
-                  // quote: currentQuote,
-                  wallpaper: currentWallpaper,
-                  textAlign: textAlign,
-                );
-              },
-            ),
-            _buildCustomButton(
-              icon: Icons.home_outlined,
-              size: 30,
-              onPressed: () {
-                currentWallpaper.quote = currentQuote;
-                SetWallPaper.setWallpaper(
-                  wd: physicalWd,
-                  ht: physicalHt,
-                  which: SetWallPaper.FLAG_HOME_SCREEN,
-                  // quote: currentQuote,
-                  wallpaper: currentWallpaper,
-                  textAlign: textAlign,
-                );
-              },
-            ),
-            _buildCustomButton(
-              text: "BOTH",
-              icon: null,
-              size: 19,
-              onPressed: () {
-                currentWallpaper.quote = currentQuote;
-                SetWallPaper.setWallpaper(
-                  wd: physicalWd,
-                  ht: physicalHt,
-                  which: SetWallPaper.FLAG_BOTH_SCREEN,
-                  // quote: currentQuote,
-                  wallpaper: currentWallpaper,
-                  textAlign: textAlign,
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCustomButton({
-    String? text,
-    required IconData? icon,
-    required double size,
-    required Function onPressed,
-  }) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 3,
-        padding: EdgeInsets.symmetric(vertical: 7, horizontal: 7),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(13),
-        ),
-      ),
-      onPressed: () => onPressed(),
-      child: SizedBox(
-        height: 55,
-        width: 65,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 3,
-          children: [
-            (text == null)
-                ? Icon(
-                    icon,
-                    size: size,
-                  )
-                : Text(
-                    text,
-                    style: GoogleFonts.rubikDoodleShadow(
-                      textStyle: TextStyle(
-                        fontSize: size,
-                        fontWeight: FontWeight.bold,
-                        height: 1.6,
-                      ),
-                    ),
-                  ),
-            Text(
-              "Set As",
-              style: TextStyle(fontSize: 15),
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }

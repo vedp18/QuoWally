@@ -5,8 +5,9 @@ sealed class QuoteEvent {}
 
 final class QuoteChangedEvent extends QuoteEvent {
   final String newQuoteText;
+  final String newAuthorText;
 
-  QuoteChangedEvent({required this.newQuoteText});
+  QuoteChangedEvent({required this.newAuthorText, required this.newQuoteText});
 }
 
 final class QuoteColorChangedEvent extends QuoteEvent {

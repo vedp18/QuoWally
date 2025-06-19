@@ -1,0 +1,2 @@
+D:/VS_CODE/Flutter/quowally/android/app/.cxx/Debug/4g2h5x25/x86/CMakeFiles/edit_cache.dir
+D:/VS_CODE/Flutter/quowally/android/app/.cxx/Debug/4g2h5x25/x86/CMakeFiles/rebuild_cache.dir
