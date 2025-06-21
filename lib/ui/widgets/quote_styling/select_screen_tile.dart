@@ -1,10 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quowally/blocs/author_bloc/author_bloc.dart';
 import 'package:quowally/blocs/auto_change_quote_bloc/auto_change_quote_bloc.dart';
 import 'package:quowally/utils/auto_change_quote_values.dart';
-import 'package:quowally/utils/quote_styling_values.dart';
 
 class SelectScreenTile extends StatelessWidget {
   const SelectScreenTile({super.key});

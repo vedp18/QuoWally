@@ -75,7 +75,7 @@ class SelectQuoteListTile extends StatelessWidget {
                           // menuWidth: 150,
                           value: quoteLists.contains(state)
                               ? state
-                              : quoteLists.last,
+                              : quoteLists.first,
                           //  quoteLists.contains(state)
                           //     ? state.name
                           //     : quoteLists.first.name,

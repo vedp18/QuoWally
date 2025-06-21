@@ -53,4 +53,15 @@ class Wallpaper {
 
   factory Wallpaper.fromJson(String source) =>
       Wallpaper.fromMap(json.decode(source) as Map<String, dynamic>);
+
+
+  Wallpaper copyWith({
+    Color? wallpaperColor,
+    Quote? quote,
+  }) {
+    return Wallpaper(
+      wallpaperColor: wallpaperColor ?? this.wallpaperColor,
+      quote: quote ?? this.quote,
+    );
+  }
 }

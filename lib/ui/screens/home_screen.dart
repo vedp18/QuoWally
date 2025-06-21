@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/data/provider/quote_list_provider.dart';
 import 'package:quowally/ui/screens/auto_change_config_screen.dart';
@@ -24,18 +25,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Color _backgroundColor = Colors.white;
   TextAlign textAlign = TextAlign.center;
 
-  void _navigateTo(String route, BuildContext context) {
-    Navigator.pop(context); // Close the drawer
-    // Implement navigation logic here
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Navigated to $route")),
-    );
-  }
+  // void _navigateTo(String route, BuildContext context) {
+  //   Navigator.pop(context); // Close the drawer
+  //   // Implement navigation logic here
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text("Navigated to $route")),
+  //   );
+  // }
 
   @override
   void initState() {
     super.initState();
     quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
+
+    // if(context.read<QuoteListBloc>().state.lists.isEmpty){
+
+    // }
     _loadQuoteLists();
 
     // print("hello:  ${context.read<QuoteListBloc>().state.lists.first.quotes.length}");
@@ -78,6 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
     // print(++rebuild);
 
     // final double dpWd = MediaQuery.of(context).size.width;
@@ -121,7 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
                 leading: Icon(Icons.schedule),
                 title: const Text('Set Auto Change Quote'),
-                onTap: () {
+                onTap: () async {
+                    print((await getApplicationDocumentsDirectory()).path);
                   Navigator.pop(context);
                   Navigator.push(
                     context,

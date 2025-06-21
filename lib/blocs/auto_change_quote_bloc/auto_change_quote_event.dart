@@ -4,8 +4,10 @@ part of 'auto_change_quote_bloc.dart';
 sealed class AutoChangeQuoteEvent {}
 
 class ToggleAutoChange extends AutoChangeQuoteEvent {
-  final bool enabled;
-  ToggleAutoChange({required this.enabled});
+  // final Wallpaper wallpaper;
+  final bool isEnabled;
+  // final BuildContext context;
+  ToggleAutoChange({required this.isEnabled});
 }
 
 class UpdateQuoteList extends AutoChangeQuoteEvent {

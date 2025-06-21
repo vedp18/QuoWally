@@ -25,4 +25,12 @@ class QuoteState {
 
   factory QuoteState.fromJson(String source) =>
       QuoteState.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  QuoteState copyWith({
+    Quote? updatedQuote,
+  }) {
+    return QuoteState(
+      updatedQuote: updatedQuote ?? this.updatedQuote,
+    );
+  }
 }

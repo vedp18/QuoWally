@@ -21,6 +21,8 @@ dependencies:
   flutter_switch: ^0.3.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  workmanager: ^0.6.0
+  android_alarm_manager_plus: ^4.0.7
 
 dev_dependencies:
   flutter_test:

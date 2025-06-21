@@ -22,6 +22,14 @@ class WallpaperState {
   String toJson() => json.encode(toMap());
 
   factory WallpaperState.fromJson(String source) => WallpaperState.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  WallpaperState copyWith({
+    Wallpaper? wallpaper,
+  }) {
+    return WallpaperState(
+      wallpaper: wallpaper ?? this.wallpaper,
+    );
+  }
 }
 
 

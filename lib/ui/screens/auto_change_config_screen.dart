@@ -10,7 +10,6 @@ import 'package:quowally/ui/widgets/quote_preview.dart';
 class AutoChangeConfigScreen extends StatelessWidget {
   const AutoChangeConfigScreen({super.key});
 
-
   final Color _backgroundColor = Colors.white;
 
   // void _toggleAutoChange(bool value) {
@@ -41,9 +40,23 @@ class AutoChangeConfigScreen extends StatelessWidget {
                 inactiveColor: Colors.grey,
                 value: state.isEnabled,
                 onToggle: (value) {
+                  // final QuoteList selectedQuoteList = context.read<AutoChangeQuoteBloc>().state.selectedQuoteList;
+                  // final int index = selectedQuoteList.getAndIncrementIndex();
+                  // final quote = selectedQuoteList.quotes[index];
+
+                  // context.read<QuoteBloc>().add(QuoteChangedEvent(newAuthorText: quote.authorText, newQuoteText: quote.quoteText));
+
+                  // final Quote currentQuote =
+                  //     context.read<QuoteBloc>().state.updatedQuote;
+                  // currentQuote.authorStyle =
+                  //     context.read<AuthorBloc>().state.updatedAuthorStyle;
+                  // final currentWallpaper =
+                  //     context.read<WallpaperBloc>().state.wallpaper;
+                  // currentWallpaper.quote = currentQuote;
+
                   context
                       .read<AutoChangeQuoteBloc>()
-                      .add(ToggleAutoChange(enabled: value));
+                      .add(ToggleAutoChange(isEnabled: value));
                 },
               );
             },
@@ -90,7 +103,9 @@ class AutoChangeConfigScreen extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             )),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<AutoChangeQuoteBloc>().add(ToggleAutoChange(isEnabled: state.isEnabled));
+                        },
                         child: Text(
                           "Save Changes",
                           style: GoogleFonts.andika(

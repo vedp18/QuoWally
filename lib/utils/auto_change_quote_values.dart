@@ -7,6 +7,7 @@ class AutoChangeQuoteValues {
   };
 
   static Map<Duration, String> quoteChangeInterval = {
+    Duration(minutes: 15) : "15 Minutes",
     Duration(hours: 1): "1 Hour",
     Duration(hours: 2): "2 Hours",
     Duration(hours: 4): "4 Hours",
