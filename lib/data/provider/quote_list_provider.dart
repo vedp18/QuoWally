@@ -23,14 +23,25 @@ class QuoteListProvider {
 
     final quotes = jsonList.map((e) => StoredQuote.fromMap(e)).toList();
     // print("quotesLength: ${quotes.length}");
-    print(quotes.first.quoteText);
+    // print(quotes.first.quoteText);
 
-    final list = QuoteList(name: name, isPrebuilt: true, filename: filename)
-      ..quotes = quotes;
+    final list = QuoteList(name: name, isPrebuilt: true, filename: filename, quotes: quotes);
 
-    // Add to BLoC (if not already there)
-    quoteListBloc
-        .add(AddQuoteList(quoteList: list));
+    final existingIndex = quoteListBloc.state.lists.indexWhere(
+      (l) => l.name == list.name && l.filename == list.filename && l.isPrebuilt,
+    );
+
+    if (existingIndex != -1) {
+      // Replace quotes of the existing QuoteList
+      final updatedList = quoteListBloc.state.lists[existingIndex]
+        ..quotes = quotes;
+
+      quoteListBloc.add(UpdateQuoteListQuotes(
+          updatedQuotes: updatedList.quotes, quoteList: updatedList));
+    } else {
+      // Add new list if not already present
+      quoteListBloc.add(AddQuoteList(quoteList: list));
+    }
 
     return list;
   }
@@ -40,15 +51,24 @@ class QuoteListProvider {
     final box = await Hive.openBox<StoredQuote>(name);
     final quotes = box.values.toList();
 
-    final list = QuoteList(name: name, isPrebuilt: false, filename: '')
-      ..quotes = quotes;
+    final list = QuoteList(name: name, isPrebuilt: false, filename: '', quotes: quotes);
 
-    // Add to BLoC (if not already there)
-    quoteListBloc.add(
-      AddQuoteList(
-        quoteList: QuoteList(name: name, filename: '', isPrebuilt: false),
-      ),
+    final existingIndex = quoteListBloc.state.lists.indexWhere(
+      (l) =>
+          l.name == list.name && l.filename == list.filename && !l.isPrebuilt,
     );
+
+    if (existingIndex != -1) {
+      // Replace quotes of the existing QuoteList
+      final updatedList = quoteListBloc.state.lists[existingIndex]
+        ..quotes = quotes;
+
+      quoteListBloc.add(UpdateQuoteListQuotes(
+          updatedQuotes: updatedList.quotes, quoteList: updatedList));
+    } else {
+      // Add new list if not already present
+      quoteListBloc.add(AddQuoteList(quoteList: list));
+    }
 
     return list;
   }

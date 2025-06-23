@@ -53,6 +53,7 @@ class UpdateQuoteInterval extends StatelessWidget {
                     return state.interval;
                   },
                   builder: (context, interval) {
+                    
                     return DropdownButton2<Duration>(
                       buttonStyleData: ButtonStyleData(
                         width: 171,

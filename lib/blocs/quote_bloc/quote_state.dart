@@ -16,13 +16,32 @@ class QuoteState {
 
   factory QuoteState.fromMap(Map<String, dynamic> map) {
     return QuoteState(
-      updatedQuote: Quote.fromMap((map["updatedQuote"] ??
-          Map<String, dynamic>.from({})) as Map<String, dynamic>),
+      updatedQuote: Quote.fromMap(
+        ((map["updatedQuote"] ?? {}) as Map).map(
+          (k, v) => MapEntry(k.toString(), v),
+        ),
+          ),
     );
   }
+  // factory QuoteState.fromMap(Map<String, dynamic> map) {
+  //   return QuoteState(
+  //     updatedQuote: Quote.fromMap(
+  //       (map["updatedQuote"] ??
+  //         Map<String, dynamic>.from({})) as Map<String, dynamic>
+  //         ),
+  //   );
+  // }
 
   String toJson() => json.encode(toMap());
 
   factory QuoteState.fromJson(String source) =>
       QuoteState.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  QuoteState copyWith({
+    Quote? updatedQuote,
+  }) {
+    return QuoteState(
+      updatedQuote: updatedQuote ?? this.updatedQuote,
+    );
+  }
 }

@@ -48,8 +48,18 @@ class Quote {
     return Quote(
       quote: (map["quote"] ?? '') as String,
       author: (map["author"] ?? '') as String,
-      quoteStyle: QuoteStyle.fromMap((map["quoteStyle"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>),
-      authorStyle: AuthorStyle.fromMap((map["authorStyle"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>),
+      quoteStyle: QuoteStyle.fromMap(
+        ((map["quoteStyle"] ?? {}) as Map).map(
+            (k, v) => MapEntry(k.toString(), v),
+          ),
+        // (map["quoteStyle"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>
+        ),
+      authorStyle: AuthorStyle.fromMap(
+        ((map["authorStyle"] ?? {}) as Map).map(
+            (k, v) => MapEntry(k.toString(), v),
+          ),
+        // (map["authorStyle"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>
+        ),
     );
   }
 

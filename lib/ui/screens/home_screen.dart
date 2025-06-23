@@ -8,6 +8,7 @@ import 'package:quowally/ui/widgets/copy_share_row.dart';
 import 'package:quowally/ui/widgets/custom_bottom_navigation_bar.dart';
 import 'package:quowally/ui/widgets/qoute_styling_list_tile.dart';
 import 'package:quowally/ui/widgets/quote_preview.dart';
+import 'package:quowally/utils/custom_logger.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,17 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Color _backgroundColor = Colors.white;
   TextAlign textAlign = TextAlign.center;
 
-  void _navigateTo(String route, BuildContext context) {
-    Navigator.pop(context); // Close the drawer
-    // Implement navigation logic here
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Navigated to $route")),
-    );
-  }
 
   @override
   void initState() {
     super.initState();
+
     quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
     _loadQuoteLists();
 
@@ -78,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CustomLogger.logToFile("App started -- Entered into HomeScreen<build>");
     // print(++rebuild);
 
     // final double dpWd = MediaQuery.of(context).size.width;

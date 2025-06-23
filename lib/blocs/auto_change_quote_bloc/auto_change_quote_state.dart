@@ -18,12 +18,17 @@ class AutoChangeQuoteState {
   factory AutoChangeQuoteState.initial() {
     return AutoChangeQuoteState(
       isEnabled: false,
-      interval: const Duration(hours: 1),
-      selectedQuoteList: QuoteList(name: "QuoWally Quotes", filename: "quowallyquotes.json"),
-      screen: 1,
+      interval: const Duration(minutes: 15),
+      selectedQuoteList: 
+      QuoteList(
+        name: "Select List",
+        filename: "smartquotes.json",
+        isPrebuilt: true,
+        quotes: [],
+      ),
+      screen: 2,
     );
   }
-
 
   // AutoChangeQuoteState copyWith({
   //   bool? isEnabled,
@@ -54,7 +59,7 @@ class AutoChangeQuoteState {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'isEnabled': isEnabled,
-      'intervalInHour': interval.inHours,
+      'intervalInMinutes': interval.inMinutes,
       'selectedQuoteList': selectedQuoteList.toMap(),
       'screen': screen,
     };
@@ -71,11 +76,25 @@ class AutoChangeQuoteState {
   factory AutoChangeQuoteState.fromMap(Map<String, dynamic> map) {
     return AutoChangeQuoteState(
       isEnabled: (map["isEnabled"] ?? false) as bool,
-      interval: Duration(hours: map['intervalInHours'] ?? 1),
-      selectedQuoteList: QuoteList.fromMap((map["selectedQuoteList"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>),
-      screen: (map["screen"] ?? 1) as int,
+      interval: Duration(minutes: map['intervalInMinutes'] ?? 15),
+      selectedQuoteList: QuoteList.fromMap(
+        ((map["selectedQuoteList"] ?? Map<String, dynamic>.from({})) as Map)
+            .map(
+          (k, v) => MapEntry(k.toString(), v),
+        ),
+      ),
+      screen: (map["screen"] ?? 2) as int,
     );
   }
+
+  // factory AutoChangeQuoteState.fromMap(Map<String, dynamic> map) {
+  //   return AutoChangeQuoteState(
+  //     isEnabled: (map["isEnabled"] ?? false) as bool,
+  //     interval: Duration(minutes: map['intervalInMinutes'] ?? 15),
+  //     selectedQuoteList: QuoteList.fromMap((map["selectedQuoteList"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>),
+  //     screen: (map["screen"] ?? 2) as int,
+  //   );
+  // }
 
   // factory AutoChangeQuoteState.fromMap(Map<String, dynamic> map) {
   //   return AutoChangeQuoteState(
@@ -87,5 +106,6 @@ class AutoChangeQuoteState {
 
   String toJson() => json.encode(toMap());
 
-  factory AutoChangeQuoteState.fromJson(String source) => AutoChangeQuoteState.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory AutoChangeQuoteState.fromJson(String source) =>
+      AutoChangeQuoteState.fromMap(json.decode(source) as Map<String, dynamic>);
 }
