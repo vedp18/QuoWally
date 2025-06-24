@@ -16,11 +16,14 @@ void callbackDispatcher() {
   WidgetsFlutterBinding.ensureInitialized();
 
   Workmanager().executeTask((task, inputData) async {
-    if (task != 'auto_change_quowally') {
-      await CustomLogger.logToFile("wrong task");
-      return Future.value(false);
-    } else {
+    // if (task != 'auto_change_quowally') {
+    //   await CustomLogger.logToFile("wrong task");
+    //   return Future.value(false);
+    // } else {
       try {
+
+        await CustomLogger.logToFile("Executing Task: $task");
+        
         final dir = await getApplicationDocumentsDirectory();
         Hive.init(dir.path);
         final hydratedBox = await Hive.openBox('hydrated_box');
@@ -154,11 +157,25 @@ void callbackDispatcher() {
         await CustomLogger.logToFile(
             "Wallpaper is Set: ${newWallpaper.toString()}");
 
+        
+        await CustomLogger.logToFile("New task scheduling......");
+        await Workmanager().registerOneOffTask(
+          'auto_change_quowally',
+          'auto_change_quowally_[${DateTime.now().toLocal()}]',
+          existingWorkPolicy: ExistingWorkPolicy.replace,
+          inputData: {
+            "intervalInMinutes" : inputData['intervalInMinutes'],
+            "physicalHt": inputData['physicalHt'],
+            "physicalWd": inputData['physicalWd'],
+          },
+          initialDelay: Duration(minutes: inputData['intervalInMinutes']),
+        );
+
+
         return Future.value(true);
       } catch (e) {
         await CustomLogger.logToFile(e.toString());
         return Future.value(false);
       }
-    }
   });
 }

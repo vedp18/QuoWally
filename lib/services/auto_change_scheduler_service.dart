@@ -19,31 +19,33 @@ class AutoChangeSchedulerService {
     //     });
 
     // task to periodically call bg task
-    Workmanager().registerPeriodicTask(
-      taskId, // Unique task ID
-      taskName, // Task name
-      frequency: Duration(minutes: intervalInMinutes),
-      // initialDelay: const Duration(seconds: 10),
-      existingWorkPolicy:
-          ExistingWorkPolicy.replace, // Replace if already scheduled
-      inputData: {
-        "physicalHt": physicalHt,
-        "physicalWd": physicalWd,
-      },
-      // initialDelay: Duration(minutes: intervalInMinutes),
-      // constraints: Constraints(
-      //   networkType: NetworkType.not_required, // Optional
-      //   requiresCharging: false,
-      //   requiresDeviceIdle: false,
-      //   requiresBatteryNotLow: true,
-      // ),
-    );
+    // Workmanager().registerPeriodicTask(
+    //   taskId, // Unique task ID
+    //   taskName, // Task name
+    //   frequency: Duration(minutes: intervalInMinutes),
+    //   // initialDelay: const Duration(seconds: 10),
+    //   existingWorkPolicy:
+    //       ExistingWorkPolicy.replace, // Replace if already scheduled
+    //   inputData: {
+    //     "physicalHt": physicalHt,
+    //     "physicalWd": physicalWd,
+    //   },
+    //   flexInterval: Duration(minutes: 1),
+    //   // initialDelay: Duration(minutes: intervalInMinutes),
+    //   // constraints: Constraints(
+    //   //   networkType: NetworkType.not_required, // Optional
+    //   //   requiresCharging: false,
+    //   //   requiresDeviceIdle: false,
+    //   //   requiresBatteryNotLow: true,
+    //   // ),
+    // );
 
     Workmanager().registerOneOffTask(
-      taskId,
-      taskName,
+      'auto_change_quowally',
+      'auto_change_quowally_[${DateTime.now().millisecondsSinceEpoch}]',
       existingWorkPolicy: ExistingWorkPolicy.replace,
       inputData: {
+        "intervalInMinutes" : intervalInMinutes,
         "physicalHt": physicalHt,
         "physicalWd": physicalWd,
       },
@@ -55,7 +57,8 @@ class AutoChangeSchedulerService {
 
   /// Call this to stop auto-change when toggle is disabled
   static cancelAutoChangeTask() {
-    Workmanager().cancelByUniqueName(taskId);
+    // Workmanager().cancelByUniqueName(taskId);
+    Workmanager().cancelAll();
     print('❌ Auto wallpaper change task cancelled.');
   }
 }
