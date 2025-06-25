@@ -1,4 +1,5 @@
 // ignore_for_file: constant_identifier_names
+import 'package:wallpaper_plugin/wallpaper_plugin.dart';
 
 import 'dart:io';
 
@@ -17,6 +18,8 @@ class SetWallPaper {
 
   // final TextEditingController _controller = TextEditingController();
   // String _quote = "";
+
+  // static const platform = MethodChannel("wallpaper_channel");
   static const platform = MethodChannel("wallpaper_channel");
 
   static Future<void> setWallpaper({
@@ -42,15 +45,13 @@ class SetWallPaper {
     final quotePainter = TextPainter(
       text: TextSpan(
         text: quote.quote,
-        style: GoogleFonts.getFont(
-          quote.quoteStyle.quoteFont,
-          textStyle: TextStyle(
-            height: 1.2,
-            color: quote.quoteStyle.quoteColor,
-            fontSize: quote.quoteStyle.quoteSize * 3,
-            fontStyle: quote.quoteStyle.quoteFontStyle,
-            fontWeight: quote.quoteStyle.quoteWeight,
-          ),
+        style: TextStyle(
+          fontFamily: quote.quoteStyle.quoteFont,
+          height: 1.2,
+          color: quote.quoteStyle.quoteColor,
+          fontSize: quote.quoteStyle.quoteSize * 3,
+          fontStyle: quote.quoteStyle.quoteFontStyle,
+          fontWeight: quote.quoteStyle.quoteWeight,
         ),
       ),
       textAlign: quote.quoteStyle.quoteAlignment,
@@ -71,22 +72,18 @@ class SetWallPaper {
     final double dy = ht * 0.266;
     quotePainter.paint(canvas, Offset(dx, dy));
 
-
-
     final authorAlignment = quote.authorStyle.authorAlignment;
     // author painter
     final authorPainter = TextPainter(
       text: TextSpan(
         text: "- ${quote.author}",
-        style: GoogleFonts.getFont(
-          quote.authorStyle.authorFont,
-          textStyle: TextStyle(
-            height: 1.2,
-            color: quote.quoteStyle.quoteColor,
-            fontSize: quote.authorStyle.authorSize * 3,
-            fontStyle: quote.authorStyle.authorFontStyle,
-            fontWeight: quote.authorStyle.authorWeight,
-          ),
+        style: TextStyle(
+          fontFamily: quote.authorStyle.authorFont,
+          height: 1.2,
+          color: quote.quoteStyle.quoteColor,
+          fontSize: quote.authorStyle.authorSize * 3,
+          fontStyle: quote.authorStyle.authorFontStyle,
+          fontWeight: quote.authorStyle.authorWeight,
         ),
       ),
       textDirection: TextDirection.ltr,
@@ -107,9 +104,6 @@ class SetWallPaper {
     final double authorDy = dy + quotePainter.height + 30; // below quote
     authorPainter.paint(canvas, Offset(authorDx, authorDy));
 
-
-
-
     // final painting on wallpaper
     final picture = recorder.endRecording();
     final img = await picture.toImage(wd.toInt(), ht.toInt());
@@ -121,87 +115,24 @@ class SetWallPaper {
     final file = File('${directory.path}/wallpaper.png');
     print(file.path);
     await file.writeAsBytes(pngBytes);
+    print("wallpaper written");
 
     try {
+      print("inside try");
+
+      await WallpaperPlugin.startWallpaperWorker(
+        filePath: file.path,
+        which: which, // or 1 for lock, 3 for both
+      );
+
       // Call the native Kotlin method to set wallpaper
-      final String result = await platform.invokeMethod(
-          "setWallpaper", {"filePath": file.path, "which": which});
-      print(result);
+      // await platform.invokeMethod("startNativeWallpaperWorker", {
+      //   "filePath": file.path,
+      //   "which": which,
+      // });
+      print("method invoked");
     } on PlatformException catch (e) {
       print("Failed to set wallpaper: ${e.message}");
     }
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   final double physicalWd = View.of(context).physicalSize.width;
-  //   final double physicalHt = View.of(context).physicalSize.height;
-  //   print(physicalWd);
-
-  //   return Scaffold(
-  //     backgroundColor: Colors.grey[900],
-  //     appBar: AppBar(
-  //       title: Text(
-  //         "Quote Wallpaper",
-  //         style: GoogleFonts.cormorantUpright(
-  //           textStyle: TextStyle(
-  //             fontSize: 22,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //     body: Center(
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(20.0),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             TextField(
-  //               controller: _controller,
-  //               style: TextStyle(color: Colors.white),
-  //               decoration: InputDecoration(
-  //                 labelText: "Enter Quote",
-  //                 labelStyle: TextStyle(color: Colors.white),
-  //                 enabledBorder: OutlineInputBorder(
-  //                   borderSide: BorderSide(color: Colors.white),
-  //                 ),
-  //               ),
-  //             ),
-  //             SizedBox(height: 20),
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 setState(() {
-  //                   _quote = _controller.text;
-  //                 });
-  //                 setWallpaper(
-  //                     wd: physicalWd, ht: physicalHt, which: FLAG_LOCK_SCREEN);
-  //               },
-  //               child: Text("Set as Lock Screen"),
-  //             ),
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 setState(() {
-  //                   _quote = _controller.text;
-  //                 });
-  //                 setWallpaper(
-  //                     wd: physicalWd, ht: physicalHt, which: FLAG_HOME_SCREEN);
-  //               },
-  //               child: Text("Set as Home Screen"),
-  //             ),
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 setState(() {
-  //                   _quote = _controller.text;
-  //                 });
-  //                 setWallpaper(
-  //                     wd: physicalWd, ht: physicalHt, which: FLAG_BOTH_SCREEN);
-  //               },
-  //               child: Text("Set as Both"),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

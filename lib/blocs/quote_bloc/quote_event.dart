@@ -3,6 +3,9 @@ part of 'quote_bloc.dart';
 @immutable
 sealed class QuoteEvent {}
 
+
+// class RefreshFromStorageEvent extends QuoteEvent {}
+
 final class QuoteChangedEvent extends QuoteEvent {
   final String newQuoteText;
   final String newAuthorText;

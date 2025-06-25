@@ -64,7 +64,8 @@ class QuoteListBloc extends HydratedBloc<QuoteListEvent, QuoteListState> {
           name: list.name,
           isPrebuilt: list.isPrebuilt,
           filename: list.filename,
-        )..quotes = event.updatedQuotes;
+          quotes: event.updatedQuotes
+        );
       }
       return list;
     }).toList();

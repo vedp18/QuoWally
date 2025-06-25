@@ -33,15 +33,13 @@ class QuotePreview extends StatelessWidget {
                 children: [
                   Text(
                     currentQuote.quote,
-                    style: GoogleFonts.getFont(
-                      currentQuote.quoteStyle.quoteFont,
-                      textStyle: TextStyle(
+                    style: TextStyle(
+                      fontFamily: currentQuote.quoteStyle.quoteFont,
                         height: 1.2,
                         fontSize: currentQuote.quoteStyle.quoteSize,
                         fontStyle: currentQuote.quoteStyle.quoteFontStyle,
                         fontWeight: currentQuote.quoteStyle.quoteWeight,
                         color: currentQuote.quoteStyle.quoteColor,
-                      ),
                     ),
                     textAlign: currentQuote.quoteStyle.quoteAlignment,
                     textDirection: TextDirection.ltr,
@@ -63,14 +61,12 @@ class QuotePreview extends StatelessWidget {
                         alignment: currentAuthorStyle.authorAlignment,
                         child: Text(
                           "-  ${currentQuote.author}",
-                          style: GoogleFonts.getFont(
-                            currentAuthorStyle.authorFont,
-                            textStyle: TextStyle(
+                          style: TextStyle(
+                            fontFamily: currentAuthorStyle.authorFont,
                               fontSize: currentAuthorStyle.authorSize,
                               fontStyle: currentAuthorStyle.authorFontStyle,
                               fontWeight: currentAuthorStyle.authorWeight,
                               color: currentQuote.quoteStyle.quoteColor,
-                            ),
                           ),
                         ),
                       );

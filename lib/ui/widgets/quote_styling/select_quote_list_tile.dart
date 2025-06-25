@@ -53,10 +53,10 @@ class SelectQuoteListTile extends StatelessWidget {
                 ),
                 BlocSelector<QuoteListBloc, QuoteListState, List<QuoteList>>(
                   selector: (state) {
+                    
                     return state.lists;
                   },
                   builder: (context, quoteLists) {
-                    print(" lenght: ${quoteLists.length}");
                     return BlocSelector<AutoChangeQuoteBloc,
                         AutoChangeQuoteState, QuoteList>(
                       selector: (state) {
@@ -75,7 +75,7 @@ class SelectQuoteListTile extends StatelessWidget {
                           // menuWidth: 150,
                           value: quoteLists.contains(state)
                               ? state
-                              : quoteLists.last,
+                              : quoteLists.first,
                           //  quoteLists.contains(state)
                           //     ? state.name
                           //     : quoteLists.first.name,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,11 +10,16 @@ import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/blocs/wallpaper_bloc/wallpaper_bloc.dart';
 import 'package:quowally/models/stored_quote.dart';
+import 'package:quowally/services/background_task_handler.dart';
 import 'package:quowally/ui/screens/home_screen.dart';
-// import 'package:quowally/qoute.dart';
+import 'package:workmanager/workmanager.dart';
+
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
 
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
 
@@ -26,7 +30,10 @@ void main() async {
       storageDirectory: HydratedStorageDirectory(
           (await getApplicationDocumentsDirectory()).path));
 
-
+  await Workmanager().initialize(
+    callbackDispatcher,
+    isInDebugMode: true,
+  );
   Bloc.observer = AppBlocObserver();
   runApp(QuoteWallpaperApp());
 }
