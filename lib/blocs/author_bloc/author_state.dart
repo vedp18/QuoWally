@@ -16,7 +16,12 @@ class AuthorState {
 
   factory AuthorState.fromMap(Map<String, dynamic> map) {
     return AuthorState(
-      updatedAuthorStyle: AuthorStyle.fromMap((map["updatedAuthorStyle"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>),
+      updatedAuthorStyle: AuthorStyle.fromMap(
+        ((map["updatedAuthorStyle"] ?? {}) as Map).map(
+          (k, v) => MapEntry(k.toString(), v),
+        ),
+        // (map["updatedAuthorStyle"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>
+        ),
     );
   }
 

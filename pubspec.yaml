@@ -21,6 +21,10 @@ dependencies:
   flutter_switch: ^0.3.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  workmanager: ^0.6.0
+  wallpaper_plugin:
+    path: ./wallpaper_plugin
+
 
 dev_dependencies:
   flutter_test:
@@ -41,3 +45,51 @@ flutter:
   uses-material-design: true
   assets:
     - assets/quotes/
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+    - family: Noto Serif
+      fonts:
+        - asset: assets/fonts/NotoSerif-VariableFont_wdth,wght.ttf
+    - family: Sofia
+      fonts:
+        - asset: assets/fonts/Sofia-Regular.ttf
+    - family: Domine
+      fonts:
+        - asset: assets/fonts/Domine-VariableFont_wght.ttf
+    - family: Old Standard TT
+      fonts:
+        - asset: assets/fonts/OldStandardTT-Regular.ttf
+    - family: Fondamento
+      fonts:
+        - asset: assets/fonts/Fondamento-Regular.ttf
+    - family: Cormorant Infrant
+      fonts:
+        - asset: assets/fonts/CormorantInfant-VariableFont_wght.ttf
+    - family: Cookie
+      fonts:
+        - asset: assets/fonts/Cookie-Regular.ttf
+    - family: Tangerine
+      fonts:
+        - asset: assets/fonts/Tangerine-Regular.ttf
+    - family: Italianno
+      fonts:
+        - asset: assets/fonts/Italianno-Regular.ttf
+    - family: Tiro Devanagari Hindi
+      fonts:
+        - asset: assets/fonts/TiroDevanagariHindi-Regular.ttf
+    - family: Tiro Devanagari Sanskrit
+      fonts:
+        - asset: assets/fonts/TiroDevanagariSanskrit-Regular.ttf
+    - family: Mukta Vaani
+      fonts:
+        - asset: assets/fonts/MuktaVaani-Regular.ttf
+    - family: Smythe
+      fonts:
+        - asset: assets/fonts/Smythe-Regular.ttf
+    - family: Major Mono Display
+      fonts:
+        - asset: assets/fonts/MajorMonoDisplay-Regular.ttf
+  
+

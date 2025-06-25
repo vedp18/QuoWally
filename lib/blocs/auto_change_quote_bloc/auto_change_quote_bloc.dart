@@ -3,16 +3,24 @@ import 'dart:convert';
 
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:quowally/models/quote_list.dart';
+import 'package:quowally/services/auto_change_scheduler_service.dart';
 
 part 'auto_change_quote_event.dart';
 part 'auto_change_quote_state.dart';
 
-class AutoChangeQuoteBloc extends HydratedBloc<AutoChangeQuoteEvent, AutoChangeQuoteState> {
-
+class AutoChangeQuoteBloc
+    extends HydratedBloc<AutoChangeQuoteEvent, AutoChangeQuoteState> {
   AutoChangeQuoteBloc() : super(AutoChangeQuoteState.initial()) {
-    
     on<ToggleAutoChange>((event, emit) {
-      emit(state.copyWith(isEnabled: event.enabled));
+
+      final newState = state.copyWith(isEnabled: event.enabled);
+      emit(newState);
+      
+      if (!event.enabled) {
+        AutoChangeSchedulerService.cancelAutoChangeTask();
+        // AutoChangeSchedulerService.scheduleAutoChangeTask(
+        //     newState.interval.inMinutes);
+      }
     });
 
     on<UpdateQuoteList>((event, emit) {

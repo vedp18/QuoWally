@@ -8,6 +8,7 @@ class QuoteListState {
 
   factory QuoteListState.initial() {
     return QuoteListState(lists: [
+      QuoteList(name: "Select List", filename: "", quotes: [], isPrebuilt: true),
       // QuoteList(name: 'QuoWally Quotes', isPrebuilt: true, filename: 'assets/quotes/quowallyquotes.json'),
       // QuoteList(name: 'Motivational Quotes', isPrebuilt: true, filename: 'assets/quotes/motivationalquotes.json'),
       // QuoteList(name: 'Smart Quotes', isPrebuilt: true, filename: 'assets/quotes/smartquotes.json'),

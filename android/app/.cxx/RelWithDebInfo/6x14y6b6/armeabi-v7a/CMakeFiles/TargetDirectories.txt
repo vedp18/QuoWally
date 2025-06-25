@@ -1,0 +1,2 @@
+D:/VS_CODE/Flutter/quowally/android/app/.cxx/RelWithDebInfo/6x14y6b6/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/VS_CODE/Flutter/quowally/android/app/.cxx/RelWithDebInfo/6x14y6b6/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -15,13 +15,26 @@ class WallpaperState {
 
   factory WallpaperState.fromMap(Map<String, dynamic> map) {
     return WallpaperState(
-      wallpaper: Wallpaper.fromMap((map["wallpaper"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>),
+      wallpaper: Wallpaper.fromMap(
+        ((map["wallpaper"] ?? {}) as Map).map(
+          (k, v) => MapEntry(k.toString(), v),
+        ),
+        // (map["wallpaper"]?? Map<String,dynamic>.from({})) as Map<String,dynamic>
+        ),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory WallpaperState.fromJson(String source) => WallpaperState.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  WallpaperState copyWith({
+    Wallpaper? wallpaper,
+  }) {
+    return WallpaperState(
+      wallpaper: wallpaper ?? this.wallpaper,
+    );
+  }
 }
 
 

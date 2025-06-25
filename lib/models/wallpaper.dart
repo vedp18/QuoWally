@@ -39,8 +39,13 @@ class Wallpaper {
         blue: wallpaperColor['b'],
       ),
       quote: map['quote'] != null
-          ? Quote.fromMap((map["quote"] ?? Map<String, dynamic>.from({}))
-              as Map<String, dynamic>)
+          ? Quote.fromMap(
+            ((map["quote"] ?? {}) as Map).map(
+                (k, v) => MapEntry(k.toString(), v),
+              ),
+            // (map["quote"] ?? Map<String, dynamic>.from({}))
+            //   as Map<String, dynamic>
+              )
           : Quote(
               quote: "This is Hiii, from deeep inside Wallpaper Model",
               quoteStyle: QuoteStyle(),
@@ -53,4 +58,14 @@ class Wallpaper {
 
   factory Wallpaper.fromJson(String source) =>
       Wallpaper.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  Wallpaper copyWith({
+    Color? wallpaperColor,
+    Quote? quote,
+  }) {
+    return Wallpaper(
+      wallpaperColor: wallpaperColor ?? this.wallpaperColor,
+      quote: quote ?? this.quote,
+    );
+  }
 }

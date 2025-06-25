@@ -1,19 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    
-        <!-- Storage Permissions (Required for Android 10 and below)
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
-
-    <!-- Wallpaper Permission (Required for setting wallpaper) -->
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
-
-    <!-- Background Service permission (If wallpaper change runs in background) -->
-    <!-- <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-  -->
+    
 
     <application
         android:label="QuoWally"

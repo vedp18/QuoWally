@@ -6,7 +6,9 @@ class AutoChangeQuoteValues {
     3 : "Both Screen",
   };
 
+
   static Map<Duration, String> quoteChangeInterval = {
+    Duration(minutes: 15) : "15 Minutes",
     Duration(hours: 1): "1 Hour",
     Duration(hours: 2): "2 Hours",
     Duration(hours: 4): "4 Hours",
@@ -16,7 +18,7 @@ class AutoChangeQuoteValues {
     Duration(hours: 24): "24 Hours",
   };
 
-  static Map<String, String> quoteList = {
-    "Quowally Quote List" : "Quowally Quote List",
-  };
+  // static Map<String, String> quoteList = {
+  //   "Quowally Quote List" : "Quowally Quote List",
+  // };
 }
