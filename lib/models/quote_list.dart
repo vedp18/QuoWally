@@ -52,13 +52,13 @@ class QuoteList {
   factory QuoteList.fromJson(String source) =>
       QuoteList.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  int getAndIncrementIndex() {
-    int current = quoteIndex;
-    quoteIndex = (quoteIndex + 1) % quotes.length;
-    return current;
-  }
+  // int getAndIncrementIndex() {
+  //   int current = quoteIndex;
+  //   quoteIndex = (quoteIndex + 1) % quotes.length;
+  //   return current;
+  // }
 
-  resetQuoteIndex() {
-    quoteIndex = 0;
-  }
+  // resetQuoteIndex() {
+  //   quoteIndex = 0;
+  // }
 }

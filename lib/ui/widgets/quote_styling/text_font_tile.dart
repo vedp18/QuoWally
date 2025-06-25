@@ -6,8 +6,6 @@ import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/utils/quote_styling_values.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class TextFontTile extends StatelessWidget {
   const TextFontTile({super.key});
 
@@ -84,10 +82,10 @@ class TextFontTile extends StatelessWidget {
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.getFont(
-                              value,
-                              textStyle:
-                                  TextStyle(fontSize: 12, color: Colors.black),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                              fontFamily: value,
                             ),
                           ),
                         );
@@ -126,7 +124,7 @@ class TextFontTile extends StatelessWidget {
                       ),
                       isExpanded: true,
                       // menuWidth: 200,
-                      value: authorFont, 
+                      value: authorFont,
                       // context
                       //     .read<AuthorBloc>()
                       //     .state
@@ -143,10 +141,10 @@ class TextFontTile extends StatelessWidget {
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.getFont(
-                              value,
-                              textStyle:
-                                  TextStyle(fontSize: 12, color: Colors.black),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                              fontFamily: value,
                             ),
                           ),
                         );

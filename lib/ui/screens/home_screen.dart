@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/data/provider/quote_list_provider.dart';
+import 'package:quowally/services/native_channel_listner.dart';
 import 'package:quowally/ui/screens/auto_change_config_screen.dart';
 import 'package:quowally/ui/widgets/copy_share_row.dart';
 import 'package:quowally/ui/widgets/custom_bottom_navigation_bar.dart';
@@ -17,7 +20,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   int rebuild = 0;
 
   late final QuoteListProvider quoteListProvider;
@@ -25,13 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Color _backgroundColor = Colors.white;
   TextAlign textAlign = TextAlign.center;
 
-
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
     quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
     _loadQuoteLists();
+
+     final quoteBloc = context.read<QuoteBloc>();
+    NativeChannelListener.register(quoteBloc);
 
     // print("hello:  ${context.read<QuoteListBloc>().state.lists.first.quotes.length}");
   }
@@ -69,6 +75,44 @@ class _HomeScreenState extends State<HomeScreen> {
     for (final custom in customLists) {
       await quoteListProvider.loadCustomQuoteList(custom.name);
     }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _syncQuoteWithHydratedBox();
+    }
+  }
+
+  Future<void> _syncQuoteWithHydratedBox() async {
+    try {
+      final box = await Hive.openBox('hydrated_box');
+      final raw = box.get('QuoteBloc');
+      if (raw == null || !mounted) return;
+
+      final storedState = QuoteState.fromMap(
+        (raw as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+
+      if (!mounted) return; // 🛡 Check again before using context
+
+      final currentState = context.read<QuoteBloc>().state;
+
+      if (storedState.updatedQuote.quote != currentState.updatedQuote.quote) {
+        context.read<QuoteBloc>().add(QuoteChangedEvent(
+              newAuthorText: storedState.updatedQuote.author,
+              newQuoteText: storedState.updatedQuote.quote,
+            ));
+      }
+    } catch (e) {
+      debugPrint("❌ Sync error: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override

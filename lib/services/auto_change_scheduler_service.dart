@@ -6,7 +6,9 @@ class AutoChangeSchedulerService {
 
   /// Call this to schedule the periodic wallpaper change
   static scheduleAutoChangeTask(
-    int intervalInMinutes, {
+    {
+    required int quoteIndex,
+    required int intervalInMinutes,
     required double physicalHt,
     required double physicalWd,
   }) {
@@ -42,9 +44,10 @@ class AutoChangeSchedulerService {
 
     Workmanager().registerOneOffTask(
       'auto_change_quowally',
-      'auto_change_quowally_[${DateTime.now().millisecondsSinceEpoch}]',
+      'auto_change_quowally_[${DateTime.now().toLocal()}]',
       existingWorkPolicy: ExistingWorkPolicy.replace,
       inputData: {
+        "quoteIndex": quoteIndex,
         "intervalInMinutes" : intervalInMinutes,
         "physicalHt": physicalHt,
         "physicalWd": physicalWd,

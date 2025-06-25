@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quowally/blocs/auto_change_quote_bloc/auto_change_quote_bloc.dart';
-import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/models/quote_list.dart';
-import 'package:quowally/models/stored_quote.dart';
 import 'package:quowally/services/auto_change_scheduler_service.dart';
 import 'package:quowally/ui/widgets/copy_share_row.dart';
 import 'package:quowally/ui/widgets/qoute_styling_list_tile.dart';
@@ -54,6 +52,7 @@ class AutoChangeConfigScreen extends StatelessWidget {
                   context
                       .read<AutoChangeQuoteBloc>()
                       .add(ToggleAutoChange(enabled: value));
+
                 },
               );
             },
@@ -119,24 +118,27 @@ class AutoChangeConfigScreen extends StatelessWidget {
                                     CustomLogger.logToFile(
                                         "Save Changes tapped");
 
-                                    final quoteList = context
-                                        .read<AutoChangeQuoteBloc>()
-                                        .state
-                                        .selectedQuoteList;
-                                    final index = quoteList.quoteIndex;
-                                    final StoredQuote storedQuote =
-                                        quoteList.quotes[index];
+                                    // final quoteList = context
+                                    //     .read<AutoChangeQuoteBloc>()
+                                    //     .state
+                                    //     .selectedQuoteList;
+                                    // final index = quoteList.quoteIndex;
+                                    // final StoredQuote storedQuote =
+                                    //     quoteList.quotes[index];
 
-                                    context
-                                        .read<QuoteBloc>()
-                                        .add(QuoteChangedEvent(
-                                          newAuthorText: storedQuote.authorText,
-                                          newQuoteText: storedQuote.quoteText,
-                                        ));
+                                    // context
+                                    //     .read<QuoteBloc>()
+                                    //     .add(QuoteChangedEvent(
+                                    //       newAuthorText: storedQuote.authorText,
+                                    //       newQuoteText: storedQuote.quoteText,
+                                    //     ));
 
                                     AutoChangeSchedulerService
                                         .scheduleAutoChangeTask(
-                                      state.interval.inMinutes,
+                                      quoteIndex:
+                                          state.selectedQuoteList.quoteIndex,
+                                      intervalInMinutes:
+                                          state.interval.inMinutes,
                                       physicalHt: physicalHt,
                                       physicalWd: physicalWd,
                                     );

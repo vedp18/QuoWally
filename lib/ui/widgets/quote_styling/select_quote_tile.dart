@@ -43,22 +43,22 @@ class SelectQuoteTile extends StatelessWidget {
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   spacing: 10,
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          padding: EdgeInsets.symmetric(horizontal: 7),
-                          // fixedSize: Size(100, 10),
-                          minimumSize: Size(0, 30),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          side: BorderSide(color: Colors.brown[50]!)),
-                      onPressed: () {},
-                      child: Text("Select Random Quote"),
-                    ),
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //       elevation: 0,
+                    //       padding: EdgeInsets.symmetric(horizontal: 7),
+                    //       // fixedSize: Size(100, 10),
+                    //       minimumSize: Size(0, 30),
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(5),
+                    //       ),
+                    //       side: BorderSide(color: Colors.brown[50]!)),
+                    //   onPressed: () {},
+                    //   child: Text("Select Random Quote"),
+                    // ),
 
                     // dynamically generate list of quotes
-                    ...quoteLists.map((quoteList) {
+                    ...quoteLists.skip(1).map((quoteList) {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             elevation: 0,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:quowally/models/author_style.dart';
 import 'package:quowally/models/quote.dart';
 import 'package:quowally/models/quote_style.dart';
@@ -25,8 +26,7 @@ class QuoteBloc extends HydratedBloc<QuoteEvent, QuoteState> {
   /// ---- INITIAL STATE----
   static final _initialState = QuoteState(
     updatedQuote: Quote(
-      quote: 
-      "He who will not economize will have to agonize..",
+      quote: "He who will not economize will have to agonize..",
       // "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
       // "ॐ असतो मा सद्गमय ।\nतमसो मा ज्योतिर्गमय ।\nमृत्योर्मा अमृतं गमय ।\nॐ शान्तिः शान्तिः शान्तिः ॥",
       author: "Brihadaranyaka Upanishad",
@@ -34,6 +34,22 @@ class QuoteBloc extends HydratedBloc<QuoteEvent, QuoteState> {
       authorStyle: AuthorStyle(),
     ),
   );
+
+  // void _onRefreshFromStorageEvent(
+  //   RefreshFromStorageEvent event,
+  //   Emitter<QuoteState> emit,
+  // ) async {
+  //   final box = await Hive.openBox('hydrated_box');
+  //   await box.close(); // ensures flush
+  //   final reloadedBox = await Hive.openBox('hydrated_box');
+  //   final raw = reloadedBox.get('QuoteBloc');
+
+  //   final storedState = QuoteState.fromMap(
+  //     (raw as Map).map((k, v) => MapEntry(k.toString(), v)),
+  //   );
+
+  //   emit(storedState);
+  // }
 
   // changing quote
   void _onQuoteChangedEvent(

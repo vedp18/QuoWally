@@ -45,15 +45,13 @@ class SetWallPaper {
     final quotePainter = TextPainter(
       text: TextSpan(
         text: quote.quote,
-        style: GoogleFonts.getFont(
-          quote.quoteStyle.quoteFont,
-          textStyle: TextStyle(
-            height: 1.2,
-            color: quote.quoteStyle.quoteColor,
-            fontSize: quote.quoteStyle.quoteSize * 3,
-            fontStyle: quote.quoteStyle.quoteFontStyle,
-            fontWeight: quote.quoteStyle.quoteWeight,
-          ),
+        style: TextStyle(
+          fontFamily: quote.quoteStyle.quoteFont,
+          height: 1.2,
+          color: quote.quoteStyle.quoteColor,
+          fontSize: quote.quoteStyle.quoteSize * 3,
+          fontStyle: quote.quoteStyle.quoteFontStyle,
+          fontWeight: quote.quoteStyle.quoteWeight,
         ),
       ),
       textAlign: quote.quoteStyle.quoteAlignment,
@@ -79,15 +77,13 @@ class SetWallPaper {
     final authorPainter = TextPainter(
       text: TextSpan(
         text: "- ${quote.author}",
-        style: GoogleFonts.getFont(
-          quote.authorStyle.authorFont,
-          textStyle: TextStyle(
-            height: 1.2,
-            color: quote.quoteStyle.quoteColor,
-            fontSize: quote.authorStyle.authorSize * 3,
-            fontStyle: quote.authorStyle.authorFontStyle,
-            fontWeight: quote.authorStyle.authorWeight,
-          ),
+        style: TextStyle(
+          fontFamily: quote.authorStyle.authorFont,
+          height: 1.2,
+          color: quote.quoteStyle.quoteColor,
+          fontSize: quote.authorStyle.authorSize * 3,
+          fontStyle: quote.authorStyle.authorFontStyle,
+          fontWeight: quote.authorStyle.authorWeight,
         ),
       ),
       textDirection: TextDirection.ltr,

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'dart:convert';
+
 import 'package:quowally/models/author_style.dart';
 import 'package:quowally/models/quote_style.dart';
 
@@ -66,4 +67,5 @@ class Quote {
   String toJson() => json.encode(toMap());
 
   factory Quote.fromJson(String source) => Quote.fromMap(json.decode(source) as Map<String, dynamic>);
+
 }
