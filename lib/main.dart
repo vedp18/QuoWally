@@ -32,8 +32,9 @@ void main() async {
 
   await Workmanager().initialize(
     callbackDispatcher,
-    isInDebugMode: true,
+    // isInDebugMode: true,
   );
+  
   Bloc.observer = AppBlocObserver();
   runApp(QuoteWallpaperApp());
 }

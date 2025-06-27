@@ -50,6 +50,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Build
 import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -67,12 +68,18 @@ class MainActivity : FlutterActivity() {
 
         val filter = IntentFilter("com.vpx.quowally.WALLPAPER_UPDATED")
         try {
-            registerReceiver(broadcastReceiver, filter)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(broadcastReceiver, filter, Context.RECEIVER_EXPORTED)
+            } else {
+                @Suppress("DEPRECATION")
+                registerReceiver(broadcastReceiver, filter)
+            }
             isReceiverRegistered = true
             Log.d("MainActivity", "✅ BroadcastReceiver registered.")
         } catch (e: Exception) {
             Log.e("MainActivity", "❌ Failed to register receiver: ${e.message}")
         }
+        
     }
 
     private val broadcastReceiver = object : BroadcastReceiver() {
