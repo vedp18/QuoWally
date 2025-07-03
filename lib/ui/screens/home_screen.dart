@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
     _loadQuoteLists();
 
-     final quoteBloc = context.read<QuoteBloc>();
+    final quoteBloc = context.read<QuoteBloc>();
     NativeChannelListener.register(quoteBloc);
 
     // print("hello:  ${context.read<QuoteListBloc>().state.lists.first.quotes.length}");
@@ -74,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -105,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: DrawerHeader(
                 child: Text(
                   'QuoWally',
-                  style: GoogleFonts.charm(
+                  style: TextStyle(
+                    fontFamily: 'Major Mono Display',
                     color: Colors.brown[800],
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -145,11 +145,11 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("QuoWally"),
         foregroundColor: Colors.brown[800],
         centerTitle: true,
-        titleTextStyle: GoogleFonts.charm(
-            textStyle: TextStyle(
-                color: Colors.brown[800],
-                fontSize: 24,
-                fontWeight: FontWeight.bold)),
+        titleTextStyle: TextStyle(
+          fontFamily: 'Major Mono Display',
+              color: Colors.brown[800],
+              fontSize: 24,
+              fontWeight: FontWeight.bold),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),

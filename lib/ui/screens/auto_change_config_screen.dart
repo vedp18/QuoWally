@@ -30,13 +30,12 @@ class AutoChangeConfigScreen extends StatelessWidget {
         backgroundColor: _backgroundColor,
         scrolledUnderElevation: 0,
         foregroundColor: Colors.brown[800],
-        titleTextStyle: GoogleFonts.charm(
-          textStyle: TextStyle(
+        titleTextStyle:  TextStyle(
+          fontFamily: 'Domine',
             color: Colors.brown[800],
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
-        ),
         title: const Text("Auto Change Quote"),
         actions: [
           BlocBuilder<AutoChangeQuoteBloc, AutoChangeQuoteState>(

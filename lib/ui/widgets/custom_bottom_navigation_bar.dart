@@ -181,12 +181,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   )
                 : Text(
                     text,
-                    style: GoogleFonts.rubikDoodleShadow(
-                      textStyle: TextStyle(
-                        fontSize: size,
-                        fontWeight: FontWeight.bold,
-                        height: 1.6,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'Rubik Doodle Shadow',
+                      fontSize: size,
+                      fontWeight: FontWeight.bold,
+                      height: 1.6,
                     ),
                   ),
             Text(

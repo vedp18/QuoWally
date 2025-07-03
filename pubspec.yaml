@@ -91,5 +91,17 @@ flutter:
     - family: Major Mono Display
       fonts:
         - asset: assets/fonts/MajorMonoDisplay-Regular.ttf
+    - family: Noto Sans Mono
+      fonts:
+        - asset: assets/fonts/NotoSansMono-VariableFont_wdth,wght.ttf
+    - family: Cabin
+      fonts:
+        - asset: assets/fonts/Cabin-VariableFont_wdth,wght.ttf
+    - family: Rubik Doodle Shadow
+      fonts:
+        - asset: assets/fonts/RubikDoodleShadow-Regular.ttf
+    - family: Nosifer
+      fonts:
+        - asset: assets/fonts/Nosifer-Regular.ttf
   
 
