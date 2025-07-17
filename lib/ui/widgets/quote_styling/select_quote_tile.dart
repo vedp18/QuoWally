@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/ui/screens/quotes_list_screen.dart';
+import 'package:quowally/ui/widgets/add_custom_quote.dart';
 
 class SelectQuoteTile extends StatelessWidget {
   const SelectQuoteTile({super.key});
@@ -56,6 +57,30 @@ class SelectQuoteTile extends StatelessWidget {
                     //   onPressed: () {},
                     //   child: Text("Select Random Quote"),
                     // ),
+                    // 
+                    
+                    // Custom Quote
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          padding: EdgeInsets.symmetric(horizontal: 7),
+                          // fixedSize: Size(100, 10),
+                          minimumSize: Size(0, 30),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          side: BorderSide(color: Colors.brown[50]!)),
+                      onPressed: () {
+                        // Navigator.push(context, route)
+                        showDialog(context: context, builder: (context)=> Dialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            child: AddCustomQuote(),
+                          ),
+                        );
+                      },
+                      child: Text("Custom Quote"),
+                    ),
 
                     // dynamically generate list of quotes
                     ...quoteLists.skip(1).map((quoteList) {

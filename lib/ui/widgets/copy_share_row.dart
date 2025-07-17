@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CopyShareRow extends StatelessWidget {
   const CopyShareRow({super.key});
@@ -39,7 +40,18 @@ class CopyShareRow extends StatelessWidget {
           style: TextButton.styleFrom(
             visualDensity: VisualDensity(horizontal: -4, vertical: -4),
           ),
-          onPressed: () {},
+          onPressed: () async {
+            final quoteText =
+                context.read<QuoteBloc>().state.updatedQuote.quote;
+            final authorText =
+                context.read<QuoteBloc>().state.updatedQuote.author;
+
+            await SharePlus.instance.share(
+              ShareParams(
+                text: "Quote: $quoteText \n Author: $authorText",
+              ),
+            );
+          },
           child: Text(
             "Share",
             style: TextStyle(

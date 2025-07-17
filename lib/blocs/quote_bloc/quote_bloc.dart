@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:quowally/models/author_style.dart';
 import 'package:quowally/models/quote.dart';
 import 'package:quowally/models/quote_style.dart';
@@ -26,10 +25,9 @@ class QuoteBloc extends HydratedBloc<QuoteEvent, QuoteState> {
   /// ---- INITIAL STATE----
   static final _initialState = QuoteState(
     updatedQuote: Quote(
-      quote: "He who will not economize will have to agonize..",
+      quote: "What you call 'yours' was Mine before you were born. What you call 'you' is only a shadow of what I shaped from silence.",
       // "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
       // "ॐ असतो मा सद्गमय ।\nतमसो मा ज्योतिर्गमय ।\nमृत्योर्मा अमृतं गमय ।\nॐ शान्तिः शान्तिः शान्तिः ॥",
-      author: "Brihadaranyaka Upanishad",
       quoteStyle: QuoteStyle(),
       authorStyle: AuthorStyle(),
     ),

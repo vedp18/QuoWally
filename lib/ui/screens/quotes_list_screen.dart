@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/models/quote_list.dart';
-import 'package:quowally/utils/quowally_quotes.dart';
 
 class QuotesListScreen extends StatelessWidget {
 
   final QuoteList quoteList; 
   
-  final List<Map<String, String>> quotes = QuoWallyQuotes.quotes;
+  // final List<Map<String, String>> quotes = QuoWallyQuotes.quotes;
 
-  QuotesListScreen({super.key, required this.quoteList});
+  const QuotesListScreen({super.key, required this.quoteList});
 
   @override
   Widget build(BuildContext context) {
