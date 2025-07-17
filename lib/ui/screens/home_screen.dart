@@ -92,87 +92,91 @@ class _HomeScreenState extends State<HomeScreen> {
     // print("logical: $dpWd and physical: $physicalWd");
     // print("logical: $dpHt and physical: $physicalHt");
 
-    return Scaffold(
-      drawer: Drawer(
-        width: 280,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            SizedBox(
-              height: 120,
-              child: DrawerHeader(
-                child: Text(
-                  'QuoWally',
-                  style: TextStyle(
-                    fontFamily: 'Major Mono Display',
-                    color: Colors.brown[800],
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+      
+        drawer: Drawer(
+          width: 280,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              SizedBox(
+                height: 120,
+                child: DrawerHeader(
+                  child: Text(
+                    'QuoWally',
+                    style: TextStyle(
+                      fontFamily: 'Major Mono Display',
+                      color: Colors.brown[800],
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-            // ListTile(
-            //   leading: Icon(Icons.favorite_border),
-            //   title: const Text('Favourite Quotes'),
-            //   onTap: () => _navigateTo('Favourites', context),
-            // ),
-            // ListTile(
-            //   leading: Icon(Icons.list_alt),
-            //   title: const Text('Custom Quote Lists'),
-            //   onTap: () => _navigateTo('Custom Lists', context),
-            // ),
-            ListTile(
-                leading: Icon(Icons.schedule),
-                title: const Text('Set Auto Change Quote'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AutoChangeConfigScreen(),
-                    ),
-                  );
-                }),
-          ],
+              // ListTile(
+              //   leading: Icon(Icons.favorite_border),
+              //   title: const Text('Favourite Quotes'),
+              //   onTap: () => _navigateTo('Favourites', context),
+              // ),
+              // ListTile(
+              //   leading: Icon(Icons.list_alt),
+              //   title: const Text('Custom Quote Lists'),
+              //   onTap: () => _navigateTo('Custom Lists', context),
+              // ),
+              ListTile(
+                  leading: Icon(Icons.schedule),
+                  title: const Text('Set Auto Change Quote'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AutoChangeConfigScreen(),
+                      ),
+                    );
+                  }),
+            ],
+          ),
         ),
-      ),
-      backgroundColor: _backgroundColor,
-      appBar: AppBar(
         backgroundColor: _backgroundColor,
-        scrolledUnderElevation: 0,
-        title: const Text("QuoWally"),
-        foregroundColor: Colors.brown[800],
-        centerTitle: true,
-        titleTextStyle: TextStyle(
-          fontFamily: 'Major Mono Display',
-              color: Colors.brown[800],
-              fontSize: 24,
-              fontWeight: FontWeight.bold),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // Quote Preview
-            QuotePreview(),
-
-            // Row --> copy and share
-            CopyShareRow(),
-
-            // Quote-Author Styling List
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6.0),
-                child: QuoteStylingList(),
-              ),
-            )
-          ],
+        appBar: AppBar(
+          backgroundColor: _backgroundColor,
+          scrolledUnderElevation: 0,
+          title: const Text("QuoWally"),
+          foregroundColor: Colors.brown[800],
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontFamily: 'Major Mono Display',
+                color: Colors.brown[800],
+                fontSize: 24,
+                fontWeight: FontWeight.bold),
         ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // Quote Preview
+              QuotePreview(),
+      
+              // Row --> copy and share
+              CopyShareRow(),
+      
+              // Quote-Author Styling List
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6.0),
+                  child: QuoteStylingList(),
+                ),
+              )
+            ],
+          ),
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }
