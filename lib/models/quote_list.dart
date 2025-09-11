@@ -1,13 +1,25 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
+import 'package:hive/hive.dart';
 import 'package:quowally/models/stored_quote.dart';
 
-class QuoteList {
+part 'quote_list.g.dart';
+
+@HiveType(typeId: 1) // <-- make sure this ID is unique in your project
+class QuoteList extends HiveObject {
+  @HiveField(0)
   final String name;
+
+  @HiveField(1)
   final bool isPrebuilt;
+
+  @HiveField(2)
   final String filename;
+
+  @HiveField(3)
   List<StoredQuote> quotes;
+
+  @HiveField(4)
   int quoteIndex;
 
   QuoteList({

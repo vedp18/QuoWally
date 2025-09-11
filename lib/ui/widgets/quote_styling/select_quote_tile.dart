@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/ui/screens/quotes_list_screen.dart';
 import 'package:quowally/ui/widgets/add_custom_quote.dart';
@@ -35,47 +36,43 @@ class SelectQuoteTile extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0),
-            child: BlocBuilder<QuoteListBloc, QuoteListState>(
+            child: BlocConsumer<QuoteListBloc, QuoteListState>(
+               listener: (context, state) {
+                // Debug log whenever list count changes
+                print(
+                    "Updated lists: ${state.lists.map((l) => l.name).toList()}");
+              },
               builder: (context, state) {
                 final quoteLists = state.lists;
-                // print("${quoteLists.first.quotes.length}");
+                // print("${quoteLists}");
 
                 return Wrap(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   spacing: 10,
                   children: [
-                    // ElevatedButton(
-                    //   style: ElevatedButton.styleFrom(
-                    //       elevation: 0,
-                    //       padding: EdgeInsets.symmetric(horizontal: 7),
-                    //       // fixedSize: Size(100, 10),
-                    //       minimumSize: Size(0, 30),
-                    //       shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(5),
-                    //       ),
-                    //       side: BorderSide(color: Colors.brown[50]!)),
-                    //   onPressed: () {},
-                    //   child: Text("Select Random Quote"),
-                    // ),
-                    // 
-                    
                     // Custom Quote
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           elevation: 0,
                           padding: EdgeInsets.symmetric(horizontal: 7),
-                          // fixedSize: Size(100, 10),
                           minimumSize: Size(0, 30),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           side: BorderSide(color: Colors.brown[50]!)),
                       onPressed: () {
-                        // Navigator.push(context, route)
-                        showDialog(context: context, builder: (context)=> Dialog(
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
-                            child: AddCustomQuote(),
+                            child: AddCustomQuote(
+                                onSave: (context, quote, author) {
+                              context.read<QuoteBloc>().add(QuoteChangedEvent(
+                                    newQuoteText: quote,
+                                    newAuthorText: author,
+                                  ));
+                            }),
                           ),
                         );
                       },
@@ -84,11 +81,11 @@ class SelectQuoteTile extends StatelessWidget {
 
                     // dynamically generate list of quotes
                     ...quoteLists.skip(1).map((quoteList) {
+                      print(quoteList.name);
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             elevation: 0,
                             padding: EdgeInsets.symmetric(horizontal: 7),
-                            // fixedSize: Size(100, 10),
                             minimumSize: Size(0, 30),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
@@ -106,40 +103,6 @@ class SelectQuoteTile extends StatelessWidget {
                         child: Text(quoteList.name),
                       );
                     }),
-
-                    // ElevatedButton(
-                    //   style: ElevatedButton.styleFrom(
-                    //       elevation: 0,
-                    //       padding: EdgeInsets.symmetric(horizontal: 7),
-                    //       // fixedSize: Size(100, 10),
-                    //       minimumSize: Size(0, 30),
-                    //       shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(5),
-                    //       ),
-                    //       side: BorderSide(color: Colors.brown[50]!)),
-                    //   onPressed: () {},
-                    //   child: Text("Favourite Quotes"),
-                    // ),
-                    // ElevatedButton(
-                    //   style: ElevatedButton.styleFrom(
-                    //       elevation: 0,
-                    //       padding: EdgeInsets.symmetric(horizontal: 7),
-                    //       // fixedSize: Size(100, 10),
-                    //       minimumSize: Size(100, 30),
-                    //       shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(5),
-                    //       ),
-                    //       side: BorderSide(color: Colors.brown[50]!)),
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => QuotesListScreen(),
-                    //       ),
-                    //     );
-                    //   },
-                    //   child: Text("QuoWally Quotes"),
-                    // ),
                   ],
                 );
               },

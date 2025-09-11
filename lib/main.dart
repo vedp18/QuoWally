@@ -9,6 +9,7 @@ import 'package:quowally/blocs/auto_change_quote_bloc/auto_change_quote_bloc.dar
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/blocs/wallpaper_bloc/wallpaper_bloc.dart';
+import 'package:quowally/models/quote_list.dart';
 import 'package:quowally/models/stored_quote.dart';
 import 'package:quowally/services/background_task_handler.dart';
 import 'package:quowally/ui/screens/home_screen.dart';
@@ -20,6 +21,7 @@ void main() async {
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
 
   // Register adapters
+  Hive.registerAdapter(QuoteListAdapter());
   Hive.registerAdapter(StoredQuoteAdapter());
 
   HydratedBloc.storage = await HydratedStorage.build(

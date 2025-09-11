@@ -1,35 +1,44 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'stored_quote.dart';
+part of 'quote_list.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class StoredQuoteAdapter extends TypeAdapter<StoredQuote> {
+class QuoteListAdapter extends TypeAdapter<QuoteList> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  StoredQuote read(BinaryReader reader) {
+  QuoteList read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return StoredQuote(
-      quoteText: fields[0] as String,
-      authorText: fields[1] as String,
+    return QuoteList(
+      name: fields[0] as String,
+      isPrebuilt: fields[1] as bool,
+      filename: fields[2] as String,
+      quoteIndex: fields[4] as int,
+      quotes: (fields[3] as List).cast<StoredQuote>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, StoredQuote obj) {
+  void write(BinaryWriter writer, QuoteList obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.quoteText)
+      ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.authorText);
+      ..write(obj.isPrebuilt)
+      ..writeByte(2)
+      ..write(obj.filename)
+      ..writeByte(3)
+      ..write(obj.quotes)
+      ..writeByte(4)
+      ..write(obj.quoteIndex);
   }
 
   @override
@@ -38,7 +47,7 @@ class StoredQuoteAdapter extends TypeAdapter<StoredQuote> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is StoredQuoteAdapter &&
+      other is QuoteListAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

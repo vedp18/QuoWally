@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 
 class AddCustomQuote extends StatefulWidget {
-  final Function(String quote, String author)? onSave;
+  final Function(BuildContext, String quote, String author) onSave;
+  final String? currentQuote;
+  final String? currentAuthor;
 
-  const AddCustomQuote({super.key, this.onSave});
+  const AddCustomQuote({super.key, required this.onSave, this.currentQuote, this.currentAuthor});
 
   @override
   State<AddCustomQuote> createState() => _AddCustomQuoteState();
@@ -70,10 +72,8 @@ class _AddCustomQuoteState extends State<AddCustomQuote> {
                   final newQuoteText = _quoteController.text.trim();
                   final newAuthorText = _authorController.text.trim();
 
-                  context.read<QuoteBloc>().add(QuoteChangedEvent(
-                        newQuoteText: newQuoteText,
-                        newAuthorText: newAuthorText,
-                      ));
+
+                  widget.onSave(context, newQuoteText, newAuthorText);
                       
                   Navigator.pop(context);
                 }

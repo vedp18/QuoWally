@@ -9,7 +9,7 @@ import 'package:quowally/models/quote_style.dart';
 
 part 'stored_quote.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class StoredQuote {
   @HiveField(0)
   String quoteText;

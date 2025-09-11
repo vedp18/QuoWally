@@ -35,7 +35,7 @@ void callbackDispatcher() {
       final rawAuto = hydratedBox.get('AutoChangeQuoteBloc');
       if (rawAuto == null) {
         await CustomLogger.logToFile(
-            "failed at <inal rawAuto = hydratedBox.get('AutoChangeQuoteBloc');> ");
+            "failed at <final rawAuto = hydratedBox.get('AutoChangeQuoteBloc');>");
         return Future.value(false);
       }
 
@@ -52,7 +52,7 @@ void callbackDispatcher() {
       await CustomLogger.logToFile("QuoteList: ${quoteList.name}");
 
       if (quoteList.quotes.isEmpty) {
-        await CustomLogger.logToFile("failed at <quoteList.quotes isEmpty");
+        await CustomLogger.logToFile("failed at <quoteList.quotes> isEmpty");
         return Future.value(false);
       }
 
@@ -78,6 +78,7 @@ void callbackDispatcher() {
         return Future.value(false);
       }
 
+      // getting QuoteBlocState from HydratedBox
       final quoteBlocState = QuoteState.fromMap(
         (rawQuote as Map).map(
           (key, value) => MapEntry(key.toString(), value),
@@ -94,6 +95,7 @@ void callbackDispatcher() {
         authorStyle: AuthorStyle(),
       );
       final newQuoteState = quoteBlocState.copyWith(updatedQuote: updatedQuote);
+      // updated QuoteBlocState
       hydratedBox.put('QuoteBloc', newQuoteState.toMap());
 
       await CustomLogger.logToFile("QuoteBloc is updated");
@@ -166,7 +168,7 @@ void callbackDispatcher() {
       await SetWallPaper.setWallpaper(
         wallpaper: newWallpaper,
         which: autoState.screen,
-        ht: inputData!['physicalHt'],
+        ht: inputData['physicalHt'],
         wd: inputData['physicalWd'],
       );
 

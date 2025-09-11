@@ -5,6 +5,7 @@ import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/data/provider/quote_list_provider.dart';
 import 'package:quowally/services/native_channel_listner.dart';
 import 'package:quowally/ui/screens/auto_change_config_screen.dart';
+import 'package:quowally/ui/screens/custom_quote_lists_screen.dart';
 import 'package:quowally/ui/widgets/copy_share_row.dart';
 import 'package:quowally/ui/widgets/custom_bottom_navigation_bar.dart';
 import 'package:quowally/ui/widgets/qoute_styling_list_tile.dart';
@@ -35,42 +36,22 @@ class _HomeScreenState extends State<HomeScreen> {
     final quoteBloc = context.read<QuoteBloc>();
     NativeChannelListener.register(quoteBloc);
 
-    // print("hello:  ${context.read<QuoteListBloc>().state.lists.first.quotes.length}");
   }
 
   Future<void> _loadQuoteLists() async {
-    final bloc = context.read<QuoteListBloc>();
-    // final provider = QuoteListProvider(bloc);
+    final prebuiltListsNames =
+        await quoteListProvider.getQuoteListNamesfromGist();
 
-    // Load prebuilt lists (from BLoC initial state)
-    // final prebuiltLists = bloc.state.lists.where((l) => l.isPrebuilt);
-    final prebuiltLists = [
-      {
-        "name": 'QuoWally Quotes',
-        "filename": 'assets/quotes/quowallyquotes.json',
-      },
-      {
-        "name": 'Motivational Quotes',
-        "filename": 'assets/quotes/motivationalquotes.json',
-      },
-      {
-        "name": 'Smart Quotes',
-        "filename": 'assets/quotes/smartquotes.json',
-      },
-    ];
-
-    for (final prebuilt in prebuiltLists) {
-      await quoteListProvider.loadPrebuiltQuoteList(
-        name: prebuilt['name']!,
-        filename: prebuilt['filename']!,
-      );
+    for (final prebuilt in prebuiltListsNames) {
+      await quoteListProvider
+          .loadGistQuoteList(filename: prebuilt, name: prebuilt)
+          .then((value) {
+        print(prebuilt);
+      });
     }
 
-    // Load custom lists (also from BLoC)
-    final customLists = bloc.state.lists.where((l) => !l.isPrebuilt);
-    for (final custom in customLists) {
-      await quoteListProvider.loadCustomQuoteList(custom.name);
-    }
+    // Load custom lists (also from Hive)
+    await quoteListProvider.loadCustomQuoteLists();
   }
 
   @override
@@ -95,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       top: false,
       child: Scaffold(
-      
         drawer: Drawer(
           width: 280,
           child: ListView(
@@ -137,6 +117,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
+              ListTile(
+                  leading: Icon(Icons.notes),
+                  title: const Text('Custom Lists'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CustomQuoteListsScreen(),
+                      ),
+                    );
+                  }),
             ],
           ),
         ),
@@ -148,10 +140,10 @@ class _HomeScreenState extends State<HomeScreen> {
           foregroundColor: Colors.brown[800],
           centerTitle: true,
           titleTextStyle: TextStyle(
-            fontFamily: 'Major Mono Display',
-                color: Colors.brown[800],
-                fontSize: 24,
-                fontWeight: FontWeight.bold),
+              fontFamily: 'Major Mono Display',
+              color: Colors.brown[800],
+              fontSize: 24,
+              fontWeight: FontWeight.bold),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -160,10 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               // Quote Preview
               QuotePreview(),
-      
+
               // Row --> copy and share
               CopyShareRow(),
-      
+
               // Quote-Author Styling List
               Expanded(
                 child: Padding(

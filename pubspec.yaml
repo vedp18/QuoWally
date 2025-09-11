@@ -25,6 +25,7 @@ dependencies:
   wallpaper_plugin:
     path: ./wallpaper_plugin
   share_plus: ^11.0.0
+  bloc: ^9.0.0
 
 
 dev_dependencies:
