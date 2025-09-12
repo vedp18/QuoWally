@@ -53,7 +53,6 @@ class SelectQuoteListTile extends StatelessWidget {
                 ),
                 BlocSelector<QuoteListBloc, QuoteListState, List<QuoteList>>(
                   selector: (state) {
-                    
                     return state.lists;
                   },
                   builder: (context, quoteLists) {
@@ -62,7 +61,8 @@ class SelectQuoteListTile extends StatelessWidget {
                       selector: (state) {
                         return state.selectedQuoteList;
                       },
-                      builder: (context, state) {
+                      builder: (context, quoteList) {
+                        print("selected: ${quoteList.name}");
                         return DropdownButton2<QuoteList>(
                           buttonStyleData: ButtonStyleData(
                             width: 171,
@@ -73,12 +73,11 @@ class SelectQuoteListTile extends StatelessWidget {
                           ),
                           isExpanded: true,
                           // menuWidth: 150,
-                          value: quoteLists.contains(state)
-                              ? state
+                          value: quoteLists.any((q) => q.name == quoteList.name)
+                              ? quoteLists
+                                  .firstWhere((q) => q.name == quoteList.name)
                               : quoteLists.first,
-                          //  quoteLists.contains(state)
-                          //     ? state.name
-                          //     : quoteLists.first.name,
+
                           onChanged: (value) {
                             // final selectedQuoteList = quoteLists.firstWhere(
                             //   (q) => q.name == value,

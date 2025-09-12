@@ -56,8 +56,8 @@ void callbackDispatcher() {
         return Future.value(false);
       }
 
-      // int index = inputData!['quoteIndex'];
-      int index = quoteList.quoteIndex;
+      int index = inputData!['quoteIndex'];
+      // int index = quoteList.quoteIndex;
       if (index >= quoteList.quotes.length) index = 0;
 
       await CustomLogger.logToFile("index: $index");
@@ -65,10 +65,10 @@ void callbackDispatcher() {
       final storedQuote = quoteList.quotes[index];
       await CustomLogger.logToFile("next quote: ${storedQuote.quoteText}");
 
-      quoteList.quoteIndex = (index + 1) % quoteList.quotes.length;
+      // quoteList.quoteIndex = (index + 1) % quoteList.quotes.length;
 
-      final newAutoState = autoState.copyWith(selectedQuoteList: quoteList);
-      hydratedBox.put('AutoChangeQuoteBloc', newAutoState.toMap());
+      // final newAutoState = autoState.copyWith(selectedQuoteList: quoteList);
+      // hydratedBox.put('AutoChangeQuoteBloc', newAutoState.toMap());
 
       // Update QuoteBloc state
       final rawQuote = hydratedBox.get('QuoteBloc');

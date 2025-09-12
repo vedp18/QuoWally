@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/data/provider/quote_list_provider.dart';
@@ -20,7 +19,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+class _HomeScreenState extends State<HomeScreen> {
   int rebuild = 0;
 
   late final QuoteListProvider quoteListProvider;
@@ -31,12 +30,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-
     quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
     _loadQuoteLists();
 
-     final quoteBloc = context.read<QuoteBloc>();
+    final quoteBloc = context.read<QuoteBloc>();
     NativeChannelListener.register(quoteBloc);
 
     // print("hello:  ${context.read<QuoteListBloc>().state.lists.first.quotes.length}");
@@ -78,40 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _syncQuoteWithHydratedBox();
-    }
-  }
-
-  Future<void> _syncQuoteWithHydratedBox() async {
-    try {
-      final box = await Hive.openBox('hydrated_box');
-      final raw = box.get('QuoteBloc');
-      if (raw == null || !mounted) return;
-
-      final storedState = QuoteState.fromMap(
-        (raw as Map).map((key, value) => MapEntry(key.toString(), value)),
-      );
-
-      if (!mounted) return; // 🛡 Check again before using context
-
-      final currentState = context.read<QuoteBloc>().state;
-
-      if (storedState.updatedQuote.quote != currentState.updatedQuote.quote) {
-        context.read<QuoteBloc>().add(QuoteChangedEvent(
-              newAuthorText: storedState.updatedQuote.author,
-              newQuoteText: storedState.updatedQuote.quote,
-            ));
-      }
-    } catch (e) {
-      debugPrint("❌ Sync error: $e");
-    }
-  }
-
-  @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -140,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               child: DrawerHeader(
                 child: Text(
                   'QuoWally',
-                  style: GoogleFonts.charm(
+                  style: TextStyle(
+                    fontFamily: 'Major Mono Display',
                     color: Colors.brown[800],
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -180,11 +145,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         title: const Text("QuoWally"),
         foregroundColor: Colors.brown[800],
         centerTitle: true,
-        titleTextStyle: GoogleFonts.charm(
-            textStyle: TextStyle(
-                color: Colors.brown[800],
-                fontSize: 24,
-                fontWeight: FontWeight.bold)),
+        titleTextStyle: TextStyle(
+          fontFamily: 'Major Mono Display',
+              color: Colors.brown[800],
+              fontSize: 24,
+              fontWeight: FontWeight.bold),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),

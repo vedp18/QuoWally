@@ -14,12 +14,8 @@ import 'package:quowally/services/background_task_handler.dart';
 import 'package:quowally/ui/screens/home_screen.dart';
 import 'package:workmanager/workmanager.dart';
 
-
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
 
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
 
@@ -32,8 +28,9 @@ void main() async {
 
   await Workmanager().initialize(
     callbackDispatcher,
-    isInDebugMode: true,
+    // isInDebugMode: true,
   );
+
   Bloc.observer = AppBlocObserver();
   runApp(QuoteWallpaperApp());
 }
@@ -64,7 +61,10 @@ class QuoteWallpaperApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Quote Wallpaper",
-        theme: ThemeData(colorSchemeSeed: Colors.brown[600]),
+        theme: ThemeData(
+          fontFamily: 'Cabin',
+          colorSchemeSeed: Colors.brown[600],
+        ),
 
         // home: QuoteWallpaperApp2(),
         home: HomeScreen(),
