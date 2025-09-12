@@ -27,7 +27,6 @@ class CopyShareRow extends StatelessWidget {
                 content: Text("Quote copied to clipboard"),
               ),
             );
-            messenger.deactivate();
           },
           child: Text(
             "Copy",

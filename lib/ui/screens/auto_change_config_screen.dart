@@ -15,12 +15,13 @@ class AutoChangeConfigScreen extends StatelessWidget {
 
   final Color _backgroundColor = Colors.white;
 
-  // void _toggleAutoChange(bool value) {
   @override
   Widget build(BuildContext context) {
+    // Density Pixel sizes of Device
     final double dpWd = MediaQuery.of(context).size.width;
     final double dpHt = MediaQuery.of(context).size.height;
 
+    // Physical sizes of Device
     final double physicalWd = dpWd * MediaQuery.devicePixelRatioOf(context);
     final double physicalHt = dpHt * MediaQuery.devicePixelRatioOf(context);
 
@@ -32,12 +33,12 @@ class AutoChangeConfigScreen extends StatelessWidget {
           backgroundColor: _backgroundColor,
           scrolledUnderElevation: 0,
           foregroundColor: Colors.brown[800],
-          titleTextStyle:  TextStyle(
+          titleTextStyle: TextStyle(
             fontFamily: 'Domine',
-              color: Colors.brown[800],
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            color: Colors.brown[800],
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
           title: const Text("Auto Change Quote"),
           actions: [
             BlocBuilder<AutoChangeQuoteBloc, AutoChangeQuoteState>(
@@ -53,7 +54,6 @@ class AutoChangeConfigScreen extends StatelessWidget {
                     context
                         .read<AutoChangeQuoteBloc>()
                         .add(ToggleAutoChange(enabled: value));
-      
                   },
                 );
               },
@@ -70,17 +70,17 @@ class AutoChangeConfigScreen extends StatelessWidget {
               child: Opacity(
                 opacity: state.isEnabled ? 1.0 : 0.5, // dim when disabled
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       // Quote Preview
                       QuotePreview(),
-      
+
                       // Row --> copy and share
                       CopyShareRow(),
-      
+
                       // Quote Styling
                       Expanded(
                         child: Padding(
@@ -91,7 +91,7 @@ class AutoChangeConfigScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-      
+
                       BlocSelector<AutoChangeQuoteBloc, AutoChangeQuoteState,
                           QuoteList>(
                         selector: (state) {
@@ -102,10 +102,10 @@ class AutoChangeConfigScreen extends StatelessWidget {
                             absorbing:
                                 (state.selectedQuoteList.name == "Select List"),
                             child: Opacity(
-                              opacity:
-                                  !(state.selectedQuoteList.name == "Select List")
-                                      ? 1.0
-                                      : 0.5, // dim when disabled
+                              opacity: !(state.selectedQuoteList.name ==
+                                      "Select List")
+                                  ? 1.0
+                                  : 0.5, // dim when disabled
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: ElevatedButton(
@@ -118,22 +118,7 @@ class AutoChangeConfigScreen extends StatelessWidget {
                                     if (state.isEnabled) {
                                       CustomLogger.logToFile(
                                           "Save Changes tapped");
-      
-                                      // final quoteList = context
-                                      //     .read<AutoChangeQuoteBloc>()
-                                      //     .state
-                                      //     .selectedQuoteList;
-                                      // final index = quoteList.quoteIndex;
-                                      // final StoredQuote storedQuote =
-                                      //     quoteList.quotes[index];
-      
-                                      // context
-                                      //     .read<QuoteBloc>()
-                                      //     .add(QuoteChangedEvent(
-                                      //       newAuthorText: storedQuote.authorText,
-                                      //       newQuoteText: storedQuote.quoteText,
-                                      //     ));
-      
+
                                       AutoChangeSchedulerService
                                           .scheduleAutoChangeTask(
                                         quoteIndex:
@@ -143,22 +128,21 @@ class AutoChangeConfigScreen extends StatelessWidget {
                                         physicalHt: physicalHt,
                                         physicalWd: physicalWd,
                                       );
-      
-                                      ScaffoldMessenger.of(context).showSnackBar(
+
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         SnackBar(
                                           duration: Duration(milliseconds: 540),
                                           elevation: 5,
                                           backgroundColor: Colors.brown[50],
                                           behavior: SnackBarBehavior.floating,
                                           width: 300,
-                                          // margin: EdgeInsets.all(10),
                                           padding:
                                               EdgeInsets.symmetric(vertical: 5),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(9),
                                           ),
-                                          // backgroundColor: ,
                                           content: Center(
                                             child: Text(
                                               "Auto change Quote is Enabled",
@@ -170,8 +154,6 @@ class AutoChangeConfigScreen extends StatelessWidget {
                                         ),
                                       );
                                     }
-      
-                                    // context.read<AutoChangeQuoteBloc>().add(ToggleAutoChange(enabled: state.isEnabled));
                                   },
                                   child: Text(
                                     "Save Changes",

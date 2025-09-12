@@ -29,7 +29,7 @@ void callbackDispatcher() {
       Hive.init(dir.path);
       final hydratedBox = await Hive.openBox('hydrated_box');
 
-      print("keys: ${hydratedBox.keys.length}");
+      debugPrint("keys: ${hydratedBox.keys.length}");
       await CustomLogger.logToFile(hydratedBox.keys.toList().toString());
 
       final rawAuto = hydratedBox.get('AutoChangeQuoteBloc');
@@ -91,6 +91,7 @@ void callbackDispatcher() {
       final updatedQuote = Quote(
         quote: storedQuote.quoteText,
         author: storedQuote.authorText,
+        isFavourite: storedQuote.isFavourite,
         quoteStyle: quoteBlocState.updatedQuote.quoteStyle,
         authorStyle: AuthorStyle(),
       );

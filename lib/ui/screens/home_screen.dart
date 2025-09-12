@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
-import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
-import 'package:quowally/data/provider/quote_list_provider.dart';
 import 'package:quowally/services/native_channel_listner.dart';
 import 'package:quowally/ui/screens/auto_change_config_screen.dart';
 import 'package:quowally/ui/screens/custom_quote_lists_screen.dart';
+import 'package:quowally/ui/screens/favourite_quotes_screen.dart';
 import 'package:quowally/ui/widgets/copy_share_row.dart';
 import 'package:quowally/ui/widgets/custom_bottom_navigation_bar.dart';
 import 'package:quowally/ui/widgets/qoute_styling_list_tile.dart';
@@ -22,36 +22,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int rebuild = 0;
 
-  late final QuoteListProvider quoteListProvider;
+  // late final QuoteListProvider quoteListProvider;
 
-  Color _backgroundColor = Colors.white;
+  final Color _backgroundColor = Colors.white;
   TextAlign textAlign = TextAlign.center;
 
   @override
   void initState() {
     super.initState();
-    quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
-    _loadQuoteLists();
+    // quoteListProvider = QuoteListProvider(context.read<QuoteListBloc>());
+    // _loadQuoteLists();
 
     final quoteBloc = context.read<QuoteBloc>();
     NativeChannelListener.register(quoteBloc);
-
-  }
-
-  Future<void> _loadQuoteLists() async {
-    final prebuiltListsNames =
-        await quoteListProvider.getQuoteListNamesfromGist();
-
-    for (final prebuilt in prebuiltListsNames) {
-      await quoteListProvider
-          .loadGistQuoteList(filename: prebuilt, name: prebuilt)
-          .then((value) {
-        print(prebuilt);
-      });
-    }
-
-    // Load custom lists (also from Hive)
-    await quoteListProvider.loadCustomQuoteLists();
   }
 
   @override
@@ -78,57 +61,143 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         drawer: Drawer(
           width: 280,
-          child: ListView(
-            padding: EdgeInsets.zero,
+          child: Column(
             children: [
               SizedBox(
                 height: 120,
                 child: DrawerHeader(
-                  child: Text(
-                    'QuoWally',
-                    style: TextStyle(
-                      fontFamily: 'Major Mono Display',
-                      color: Colors.brown[800],
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'QuoWally',
+                      style: TextStyle(
+                        fontFamily: 'Major Mono Display',
+                        color: Colors.brown[800],
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
               ),
-              // ListTile(
-              //   leading: Icon(Icons.favorite_border),
-              //   title: const Text('Favourite Quotes'),
-              //   onTap: () => _navigateTo('Favourites', context),
-              // ),
-              // ListTile(
-              //   leading: Icon(Icons.list_alt),
-              //   title: const Text('Custom Quote Lists'),
-              //   onTap: () => _navigateTo('Custom Lists', context),
-              // ),
-              ListTile(
-                  leading: Icon(Icons.schedule),
-                  title: const Text('Set Auto Change Quote'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AutoChangeConfigScreen(),
+              Column(
+                children: [
+                  ListTile(
+                      leading: Icon(Icons.schedule),
+                      title: const Text('Set Auto Change Quote'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AutoChangeConfigScreen(),
+                          ),
+                        );
+                      }),
+                  ListTile(
+                      leading: Icon(Icons.notes),
+                      title: const Text('Custom Lists'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CustomQuoteListsScreen(),
+                          ),
+                        );
+                      }),
+                  ListTile(
+                      leading: Icon(Icons.favorite_border),
+                      title: const Text('Favourite Quotes'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FavouriteQuotesScreen(),
+                          ),
+                        );
+                      }),
+                ],
+              ),
+              // To cover between spaces
+              Spacer(),
+
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Developer Signature
+                    const Text(
+                      "Developed by Vedkumar Patel",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
                       ),
-                    );
-                  }),
-              ListTile(
-                  leading: Icon(Icons.notes),
-                  title: const Text('Custom Lists'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CustomQuoteListsScreen(),
+                    ),
+
+                    // vspace
+                    const SizedBox(height: 2),
+
+                    // version info
+                    Text(
+                      "Version 1.0.0+1",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
                       ),
-                    );
-                  }),
+                    ),
+
+                    // vspace
+                    const SizedBox(
+                      height: 20,
+                    ),
+
+                    const Text(
+                      "Contact me through",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+
+                    // vspace
+                    const SizedBox(
+                      height: 8,
+                    ),
+
+                    // social icons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: SvgPicture.asset(
+                            "assets/icons/github.svg",
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: SvgPicture.asset(
+                            "assets/icons/linkedin.svg",
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: SvgPicture.asset("assets/icons/twitter-x.svg"),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              // const Spacer(),
             ],
           ),
         ),

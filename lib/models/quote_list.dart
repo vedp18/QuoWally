@@ -17,7 +17,7 @@ class QuoteList extends HiveObject {
   final String filename;
 
   @HiveField(3)
-  List<StoredQuote> quotes;
+  final List<StoredQuote> quotes;
 
   @HiveField(4)
   int quoteIndex;
@@ -64,7 +64,22 @@ class QuoteList extends HiveObject {
   factory QuoteList.fromJson(String source) =>
       QuoteList.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  // int getAndIncrementIndex() {
+  QuoteList copyWith({
+    String? name,
+    bool? isPrebuilt,
+    String? filename,
+    List<StoredQuote>? quotes,
+    int? quoteIndex,
+  }) {
+    return QuoteList(
+      name: name ?? this.name,
+      isPrebuilt: isPrebuilt ?? this.isPrebuilt,
+      filename: filename ?? this.filename,
+      quotes: quotes ?? this.quotes,
+      quoteIndex: quoteIndex ?? this.quoteIndex,
+    );
+  }
+// int getAndIncrementIndex() {
   //   int current = quoteIndex;
   //   quoteIndex = (quoteIndex + 1) % quotes.length;
   //   return current;

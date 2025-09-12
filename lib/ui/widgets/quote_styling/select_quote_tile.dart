@@ -4,6 +4,7 @@ import 'package:quowally/blocs/quote_bloc/quote_bloc.dart';
 import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/ui/screens/quotes_list_screen.dart';
 import 'package:quowally/ui/widgets/add_custom_quote.dart';
+import 'package:quowally/utils/custom_logger.dart';
 
 class SelectQuoteTile extends StatelessWidget {
   const SelectQuoteTile({super.key});
@@ -37,17 +38,15 @@ class SelectQuoteTile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0),
             child: BlocConsumer<QuoteListBloc, QuoteListState>(
-               listener: (context, state) {
+              listener: (context, state) {
                 // Debug log whenever list count changes
-                print(
+                CustomLogger.logToFile(
                     "Updated lists: ${state.lists.map((l) => l.name).toList()}");
               },
               builder: (context, state) {
+                // Getting current list of QuoteLists
                 final quoteLists = state.lists;
-                // print("${quoteLists}");
-
                 return Wrap(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   spacing: 10,
                   children: [
                     // Custom Quote
@@ -61,18 +60,31 @@ class SelectQuoteTile extends StatelessWidget {
                           ),
                           side: BorderSide(color: Colors.brown[50]!)),
                       onPressed: () {
+                        // Getting current quote text and author text
+                        final String currentQuoteText =
+                            context.read<QuoteBloc>().state.updatedQuote.quote;
+                        final String currentAuthorText =
+                            context.read<QuoteBloc>().state.updatedQuote.author;
+
+                        // Dialog to set custom quote
                         showDialog(
                           context: context,
                           builder: (context) => Dialog(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
                             child: AddCustomQuote(
-                                onSave: (context, quote, author) {
-                              context.read<QuoteBloc>().add(QuoteChangedEvent(
-                                    newQuoteText: quote,
-                                    newAuthorText: author,
-                                  ));
-                            }),
+                              currentQuote: currentQuoteText,
+                              currentAuthor: currentAuthorText,
+                              onSave: (context, quote, author) {
+                                context.read<QuoteBloc>().add(
+                                      QuoteChangedEvent(
+                                        newQuoteText: quote,
+                                        newAuthorText: author,
+                                      ),
+                                    );
+                              },
+                            ),
                           ),
                         );
                       },
@@ -81,7 +93,6 @@ class SelectQuoteTile extends StatelessWidget {
 
                     // dynamically generate list of quotes
                     ...quoteLists.skip(1).map((quoteList) {
-                      print(quoteList.name);
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             elevation: 0,

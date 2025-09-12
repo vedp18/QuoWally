@@ -12,14 +12,11 @@ class AutoChangeQuoteBloc
     extends HydratedBloc<AutoChangeQuoteEvent, AutoChangeQuoteState> {
   AutoChangeQuoteBloc() : super(AutoChangeQuoteState.initial()) {
     on<ToggleAutoChange>((event, emit) {
-
       final newState = state.copyWith(isEnabled: event.enabled);
       emit(newState);
-      
+
       if (!event.enabled) {
         AutoChangeSchedulerService.cancelAutoChangeTask();
-        // AutoChangeSchedulerService.scheduleAutoChangeTask(
-        //     newState.interval.inMinutes);
       }
     });
 

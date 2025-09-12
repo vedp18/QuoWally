@@ -17,9 +17,13 @@ class StoredQuote {
   @HiveField(1)
   String authorText;
 
+  @HiveField(2)
+  bool isFavourite;
+
   StoredQuote({
     required this.quoteText,
     required this.authorText,
+    this.isFavourite = false,
   });
 
   // Convert to full Quote model (use default style)
@@ -28,6 +32,7 @@ class StoredQuote {
     return Quote(
       quote: quoteText,
       author: authorText,
+      isFavourite: isFavourite,
       quoteStyle: defaultQuoteStyle,
       authorStyle: defaultAuthorStyle,
     );
@@ -38,6 +43,7 @@ class StoredQuote {
     return StoredQuote(
       quoteText: quote.quote,
       authorText: quote.author,
+      isFavourite: quote.isFavourite,
     );
   }
 
@@ -45,6 +51,7 @@ class StoredQuote {
     return <String, dynamic>{
       'quote': quoteText,
       'author': authorText,
+      'isFavourite': isFavourite,
     };
   }
 
@@ -52,10 +59,24 @@ class StoredQuote {
     return StoredQuote(
       quoteText: (map["quote"] ?? '') as String,
       authorText: (map["author"] ?? '') as String,
+      isFavourite: (map["isFavourite"] ?? false) as bool,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory StoredQuote.fromJson(String source) => StoredQuote.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory StoredQuote.fromJson(String source) =>
+      StoredQuote.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  StoredQuote copyWith({
+    String? quoteText,
+    String? authorText,
+    bool? isFavourite,
+  }) {
+    return StoredQuote(
+      quoteText: quoteText ?? this.quoteText,
+      authorText: authorText ?? this.authorText,
+      isFavourite: isFavourite ?? this.isFavourite,
+    );
+  }
 }

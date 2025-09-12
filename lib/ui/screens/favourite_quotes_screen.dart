@@ -5,12 +5,9 @@ import 'package:quowally/blocs/quote_list_bloc/quote_list_bloc.dart';
 import 'package:quowally/models/quote_list.dart';
 import 'package:quowally/models/stored_quote.dart';
 import 'package:quowally/ui/screens/home_screen.dart';
-import 'package:quowally/ui/widgets/add_custom_quote.dart';
 
-class QuotesListScreen extends StatelessWidget {
-  final QuoteList quoteList;
-
-  const QuotesListScreen({super.key, required this.quoteList});
+class FavouriteQuotesScreen extends StatelessWidget {
+  const FavouriteQuotesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,72 +15,28 @@ class QuotesListScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
-        title: Text(quoteList.name),
-        actions: [
-          if (!quoteList.isPrebuilt)
-            IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => Dialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    child: AddCustomQuote(
-                      onSave: (context, quote, author) {
-                        final storedQuote = StoredQuote(
-                            quoteText: quote,
-                            authorText: author,
-                            isFavourite: false);
-
-                        // Get the latest version from bloc
-                        final currentList = context
-                            .read<QuoteListBloc>()
-                            .state
-                            .lists
-                            .firstWhere(
-                              (list) => list.name == quoteList.name,
-                              orElse: () => quoteList,
-                            );
-
-                        // Work with its quotes
-                        final updatedQuotes =
-                            List<StoredQuote>.from(currentList.quotes)
-                              ..add(storedQuote);
-
-                        context.read<QuoteListBloc>().add(
-                              UpdateQuoteListQuotes(
-                                quoteList: currentList,
-                                updatedQuotes: updatedQuotes,
-                              ),
-                            );
-                      },
-                    ),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.add),
-            ),
-        ],
+        title: Text("Favourite Quotes"),
+        centerTitle: true,
       ),
       body: BlocBuilder<QuoteListBloc, QuoteListState>(
         builder: (context, state) {
-          // find updated version of this list from bloc state
-          final updatedList = state.lists.firstWhere(
-            (list) => list.name == quoteList.name,
-            orElse: () => quoteList,
-          );
+          // find updated versions of StoredQuotes from bloc state
+          final favouriteQuotes = state.lists
+              .expand((list) => list.quotes // flatten all lists of quotes
+                  .where((quote) => quote.isFavourite) // filter only favourites
+                  .map(
+                    (quote) => {'quoteList': list, 'quote': quote},
+                  ))
+              .toList();
 
-          // sort in descending order (newest first)
-          final quotes = List<StoredQuote>.from(updatedList.quotes.reversed);
-
-          if (quotes.isEmpty) {
+          if (favouriteQuotes.isEmpty) {
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 30,
                 vertical: 30,
               ),
               child: Text(
-                "No Quotes added yet. \n Create through add button in Top-Right Corner.",
+                "No Quotes added yet. ",
                 style: TextStyle(
                   color: Colors.brown[100],
                   fontSize: 25,
@@ -94,17 +47,22 @@ class QuotesListScreen extends StatelessWidget {
           }
 
           return ListView.builder(
-            itemCount: quotes.length,
+            itemCount: favouriteQuotes.length,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             itemBuilder: (context, index) {
-              final quote = quotes[index];
+              final quote = favouriteQuotes[index]['quote'] as StoredQuote;
+              final quoteList =
+                  favouriteQuotes[index]['quoteList'] as QuoteList;
 
               return GestureDetector(
                 onTap: () {
                   // Adding QuoteChangedEvent to QuoteBloc
-                  context.read<QuoteBloc>().add(QuoteChangedEvent(
-                      newAuthorText: quote.authorText,
-                      newQuoteText: quote.quoteText));
+                  context.read<QuoteBloc>().add(
+                        QuoteChangedEvent(
+                          newAuthorText: quote.authorText,
+                          newQuoteText: quote.quoteText,
+                        ),
+                      );
 
                   // removing all below screens and redirecting to HomeScreen
                   Navigator.pushAndRemoveUntil(
@@ -188,7 +146,7 @@ class QuotesListScreen extends StatelessWidget {
                               // SnackBar to show Quote added to Favourites
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  duration: Duration(milliseconds: 540),
+                                  duration: Duration(milliseconds: 630),
                                   elevation: 5,
                                   backgroundColor: Colors.brown[50],
                                   behavior: SnackBarBehavior.floating,

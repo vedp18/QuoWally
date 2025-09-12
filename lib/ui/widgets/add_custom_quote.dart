@@ -7,7 +7,8 @@ class AddCustomQuote extends StatefulWidget {
   final String? currentQuote;
   final String? currentAuthor;
 
-  const AddCustomQuote({super.key, required this.onSave, this.currentQuote, this.currentAuthor});
+  const AddCustomQuote(
+      {super.key, required this.onSave, this.currentQuote, this.currentAuthor});
 
   @override
   State<AddCustomQuote> createState() => _AddCustomQuoteState();
@@ -18,17 +19,12 @@ class _AddCustomQuoteState extends State<AddCustomQuote> {
   final TextEditingController _quoteController = TextEditingController();
   final TextEditingController _authorController = TextEditingController();
 
-  // void _handleSave() {
-  //   if (_formKey.currentState!.validate()) {
-  //     widget.onSave(
-  //         _quoteController.text.trim(), _authorController.text.trim());
-  //     _quoteController.clear();
-  //     _authorController.clear();
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Quote saved successfully')),
-  //     );
-  //   }
-  // }
+  @override
+  void initState() {
+    _quoteController.text = widget.currentQuote ?? '';
+    _authorController.text = widget.currentAuthor ?? '';
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -72,9 +68,8 @@ class _AddCustomQuoteState extends State<AddCustomQuote> {
                   final newQuoteText = _quoteController.text.trim();
                   final newAuthorText = _authorController.text.trim();
 
-
                   widget.onSave(context, newQuoteText, newAuthorText);
-                      
+
                   Navigator.pop(context);
                 }
               },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quowally/ui/widgets/sync_latest_quotes_button.dart';
 import 'package:quowally/ui/widgets/quote_styling/select_quote_list_tile.dart';
 import 'package:quowally/ui/widgets/quote_styling/select_quote_tile.dart';
 import 'package:quowally/ui/widgets/quote_styling/select_screen_tile.dart';
@@ -15,7 +16,8 @@ class QuoteStylingList extends StatefulWidget {
   final bool fromAutoChange;
 
   const QuoteStylingList({
-    super.key, this.fromAutoChange = false,
+    super.key,
+    this.fromAutoChange = false,
   });
 
   @override
@@ -43,17 +45,17 @@ class _QuoteStylingListState extends State<QuoteStylingList> {
           Divider(height: 0, color: Colors.brown[100]),
           TextAlignmentTile(),
           Divider(height: 0, color: Colors.brown[100]),
-
-          if(widget.fromAutoChange) ...[
+          if (widget.fromAutoChange) ...[
             SelectQuoteListTile(),
             Divider(height: 0, color: Colors.brown[100]),
             UpdateQuoteInterval(),
             Divider(height: 0, color: Colors.brown[100]),
             SelectScreenTile(),
             Divider(height: 0, color: Colors.brown[100]),
-          ]
-          else ...[
-           SelectQuoteTile(),
+          ] else ...[
+            SelectQuoteTile(),
+            Divider(height: 0, color: Colors.brown[100]),
+            SyncLatestQuotesButton(),
           ],
         ],
       ),

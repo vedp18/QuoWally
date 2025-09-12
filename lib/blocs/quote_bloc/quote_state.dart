@@ -20,17 +20,9 @@ class QuoteState {
         ((map["updatedQuote"] ?? {}) as Map).map(
           (k, v) => MapEntry(k.toString(), v),
         ),
-          ),
+      ),
     );
   }
-  // factory QuoteState.fromMap(Map<String, dynamic> map) {
-  //   return QuoteState(
-  //     updatedQuote: Quote.fromMap(
-  //       (map["updatedQuote"] ??
-  //         Map<String, dynamic>.from({})) as Map<String, dynamic>
-  //         ),
-  //   );
-  // }
 
   String toJson() => json.encode(toMap());
 
