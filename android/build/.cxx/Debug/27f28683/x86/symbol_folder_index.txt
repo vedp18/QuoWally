@@ -1,0 +1,1 @@
+D:\VS_CODE\Flutter\quowally\android\build\app\intermediates\cxx\Debug\27f28683\obj\x86
