@@ -1,7 +1,7 @@
 name: quowally
 description: "Quote Wallpaper App."
 publish_to: 'none'
-version: 0.1.0
+version: 2.0.0
 
 environment:
   sdk: ^3.6.0
@@ -27,6 +27,7 @@ dependencies:
   share_plus: ^11.0.0
   bloc: ^9.0.0
   flutter_svg: ^2.2.1
+  url_launcher: ^6.3.2
 
 
 dev_dependencies:
@@ -50,6 +51,9 @@ flutter:
     - assets/quotes/
     - assets/icons/
   fonts:
+    - family: Arizonia
+      fonts:
+        - asset: assets/fonts/Arizonia-Regular.ttf
     - family: Lato
       fonts:
         - asset: assets/fonts/Lato-Regular.ttf

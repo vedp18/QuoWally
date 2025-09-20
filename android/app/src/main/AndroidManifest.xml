@@ -6,7 +6,6 @@
 
     <application
         android:label="QuoWally"
-        android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
